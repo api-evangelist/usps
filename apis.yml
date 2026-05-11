@@ -1,0 +1,104 @@
+aid: usps
+name: USPS
+description: >-
+  The United States Postal Service (USPS) provides a modern suite of RESTful
+  APIs for address validation, domestic and international pricing, shipping
+  label creation and cancellation, tracking, and service standards through its
+  developer portal. The APIs replace the legacy Web Tools platform and use
+  OAuth 2.0 Client Credentials for authentication. The platform supports both
+  production and TEM (Testing Environment for Mailers) endpoints for
+  developing and validating shipping integrations.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Shipping
+  - Postal
+  - Address Validation
+  - Tracking
+  - Labels
+  - Logistics
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/usps/refs/heads/main/apis.yml
+created: '2026-05-11'
+modified: '2026-05-11'
+specificationVersion: '0.19'
+apis:
+  - aid: usps:oauth2
+    name: USPS OAuth 2.0
+    description: >-
+      Token endpoint for OAuth 2.0 Client Credentials authentication used to
+      authorize requests to all USPS API products.
+    humanURL: https://developers.usps.com/Oauth
+    baseURL: https://apis.usps.com/oauth2/v3
+    tags:
+      - OAuth
+      - Authentication
+    properties:
+      - type: Documentation
+        url: https://developers.usps.com/Oauth
+  - aid: usps:addresses
+    name: USPS Addresses API
+    description: >-
+      Verify and standardize US addresses to USPS specifications, reducing
+      shipping delays and errors.
+    humanURL: https://developers.usps.com/addressesv3
+    baseURL: https://apis.usps.com/addresses/v3
+    tags:
+      - Address Validation
+    properties:
+      - type: Documentation
+        url: https://developers.usps.com/addressesv3
+  - aid: usps:tracking
+    name: USPS Tracking API
+    description: >-
+      Retrieve tracking status and delivery events for shipped packages
+      across USPS services.
+    humanURL: https://developers.usps.com/trackingv3
+    baseURL: https://apis.usps.com/tracking/v3
+    tags:
+      - Tracking
+      - Shipping
+    properties:
+      - type: Documentation
+        url: https://developers.usps.com/trackingv3
+  - aid: usps:labels
+    name: USPS Labels API
+    description: >-
+      Create and cancel domestic shipping labels with integrated address
+      standardization, pricing, and manifesting.
+    humanURL: https://developers.usps.com/labelsv3
+    baseURL: https://apis.usps.com/labels/v3
+    tags:
+      - Labels
+      - Shipping
+    properties:
+      - type: Documentation
+        url: https://developers.usps.com/labelsv3
+  - aid: usps:prices
+    name: USPS Domestic Prices API
+    description: >-
+      Retrieve current pricing information for USPS domestic shipping
+      products and services.
+    humanURL: https://developers.usps.com/pricesv3
+    baseURL: https://apis.usps.com/prices/v3
+    tags:
+      - Pricing
+      - Shipping
+    properties:
+      - type: Documentation
+        url: https://developers.usps.com/pricesv3
+
+common:
+  - type: Website
+    url: https://www.usps.com
+  - type: Documentation
+    url: https://developers.usps.com
+  - type: Getting Started
+    url: https://developers.usps.com/getting-started
+  - type: Sign Up
+    url: https://developers.usps.com/apis
+  - type: GitHub
+    url: https://github.com/USPS/api-examples
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
