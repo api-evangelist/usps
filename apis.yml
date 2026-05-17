@@ -93,9 +93,9 @@ common:
     url: https://www.usps.com
   - type: Documentation
     url: https://developers.usps.com
-  - type: Getting Started
+  - type: GettingStarted
     url: https://developers.usps.com/getting-started
-  - type: Sign Up
+  - type: SignUp
     url: https://developers.usps.com/apis
   - type: GitHub
     url: https://github.com/USPS/api-examples
