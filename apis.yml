@@ -89,6 +89,8 @@ apis:
         url: https://developers.usps.com/pricesv3
 
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/usps
   - type: Website
     url: https://www.usps.com
   - type: Documentation
