@@ -1,0 +1,750 @@
+"""
+USPS GraphQL Schema
+Conceptual GraphQL schema for the United States Postal Service APIs,
+covering address validation, tracking, labels, pricing, pickup, and service standards.
+Based on the USPS REST API developer portal at https://developer.usps.com/
+"""
+
+scalar Date
+scalar DateTime
+scalar JSON
+
+# ─── Auth ───────────────────────────────────────────────────────────────────
+
+type APIKey {
+  clientId: String!
+  clientSecret: String!
+  scopes: [String!]
+}
+
+type Token {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int!
+  issuedAt: DateTime
+  scope: String
+}
+
+# ─── Address ─────────────────────────────────────────────────────────────────
+
+type Address {
+  streetAddress: String
+  streetAddressAbbreviation: String
+  secondaryAddress: String
+  cityAbbreviation: String
+  city: String!
+  state: String!
+  urbanization: String
+  ZIPCode: String
+  ZIPPlus4: String
+  county: String
+  countyFIPS: String
+  deliveryPoint: String
+  carrierRoute: String
+  DPVConfirmation: String
+  DPVCMRA: Boolean
+  business: Boolean
+  centralDeliveryPoint: Boolean
+  vacant: Boolean
+}
+
+type AddressValidation {
+  inputAddress: Address
+  correctedAddress: Address
+  additionalInfo: AddressAdditionalInfo
+  alerts: [Alert!]
+}
+
+type AddressAdditionalInfo {
+  deliveryPointValidation: String
+  carrierRouteIndicator: String
+  ewsIndicator: Boolean
+  lacslinkCode: String
+  lacslinkIndicator: String
+  suitelinkFootnote: String
+  footnotes: String
+}
+
+type CityState {
+  city: String!
+  state: String!
+  ZIPCode: String!
+}
+
+type ZipCode {
+  ZIPCode: String!
+  ZIPCodeType: ZipCodeType!
+  city: String!
+  state: String!
+  countyName: String
+  countyFIPS: String
+}
+
+type ZipCodeDetails {
+  ZIPCode: String!
+  ZIPCodeType: ZipCodeType!
+  defaultCity: String!
+  defaultState: String!
+  defaultCounty: String
+  counties: [CountyInfo!]
+  cities: [CityInfo!]
+  timeZone: String
+}
+
+type CountyInfo {
+  name: String!
+  FIPS: String!
+}
+
+type CityInfo {
+  city: String!
+  state: String!
+}
+
+enum ZipCodeType {
+  UNIQUE
+  PO_BOX
+  MILITARY
+  STANDARD
+}
+
+# ─── Tracking ────────────────────────────────────────────────────────────────
+
+type TrackingNumber {
+  trackingNumber: String!
+  carrier: String
+  labelClass: String
+}
+
+type TrackingSummary {
+  trackingNumber: String!
+  mailClass: String
+  mailType: String
+  destinationCity: String
+  destinationState: String
+  destinationZIP: String
+  originCity: String
+  originState: String
+  originZIP: String
+  weight: Float
+  weightUOM: String
+  expectedDelivery: Date
+  events: [TrackingEvent!]
+  trackingDetails: [TrackingDetail!]
+  alerts: [Alert!]
+}
+
+type TrackingDetail {
+  trackingNumber: String!
+  additionalInfo: String
+  copyright: String
+  warnings: [String!]
+  summary: TrackingEvent
+  events: [TrackingEvent!]
+}
+
+type TrackingEvent {
+  eventType: EventType
+  eventTimestamp: DateTime
+  GMTTimestamp: DateTime
+  GMTOffset: String
+  eventCountry: EventCountry
+  eventCity: EventCity
+  eventState: EventState
+  eventZIP: EventZip
+  firm: String
+  name: String
+  authorizedAgent: Boolean
+  eventCode: String
+  furtherInformation: String
+}
+
+type EventType {
+  code: String!
+  description: String!
+}
+
+type EventCity {
+  name: String!
+}
+
+type EventState {
+  abbreviation: String!
+  name: String!
+}
+
+type EventZip {
+  code: String!
+}
+
+type EventCountry {
+  name: String!
+  isoAlpha2: String
+}
+
+# ─── Package ─────────────────────────────────────────────────────────────────
+
+type Package {
+  packageId: String
+  mailClass: MailClass
+  packageType: PackageType!
+  weight: Weight!
+  dimensions: Dimensions
+  processingCategory: String
+  rateIndicator: String
+  destinationEntryFacilityType: String
+  extraServices: [ExtraService!]
+}
+
+enum PackageType {
+  FLAT_RATE_ENVELOPE
+  LEGAL_FLAT_RATE_ENVELOPE
+  PADDED_FLAT_RATE_ENVELOPE
+  SMALL_FLAT_RATE_BOX
+  MEDIUM_FLAT_RATE_BOX
+  LARGE_FLAT_RATE_BOX
+  LARGE_FLAT_RATE_BOX_APO_FPO
+  FLAT_RATE_BOX
+  CUBIC
+  LETTER
+  FLAT
+  PARCEL
+  MACHINABLE_PARCEL
+  IRREGULAR_PARCEL
+  LARGE_PARCEL
+}
+
+type FlatRate {
+  flatRateCode: String!
+  name: String!
+  maxWeight: Float!
+  dimensions: Dimensions
+}
+
+type Weight {
+  value: Float!
+  unitOfMeasurement: WeightUnit!
+}
+
+type Dimensions {
+  length: Length
+  width: Width
+  height: Height
+  girth: Girth
+}
+
+type Length {
+  value: Float!
+  unitOfMeasurement: DimensionUnit!
+}
+
+type Width {
+  value: Float!
+  unitOfMeasurement: DimensionUnit!
+}
+
+type Height {
+  value: Float!
+  unitOfMeasurement: DimensionUnit!
+}
+
+type Girth {
+  value: Float!
+  unitOfMeasurement: DimensionUnit!
+}
+
+type Distance {
+  value: Float!
+  unitOfMeasurement: String!
+}
+
+enum WeightUnit {
+  LB
+  OZ
+  G
+  KG
+}
+
+enum DimensionUnit {
+  IN
+  CM
+}
+
+# ─── Mail Classes ─────────────────────────────────────────────────────────────
+
+enum MailClass {
+  USPS_GROUND_ADVANTAGE
+  PRIORITY_MAIL
+  PRIORITY_MAIL_EXPRESS
+  FIRST_CLASS
+  MEDIA_MAIL
+  LIBRARY_MAIL
+  BOUND_PRINTED_MATTER
+  MARKETING_MAIL
+  USPS_CONNECT_LOCAL
+  USPS_CONNECT_REGIONAL
+  USPS_CONNECT_NEXT_DAY
+  USPS_CONNECT_SAME_DAY
+}
+
+type FirstClass {
+  mailClass: String!
+  mailType: String!
+  processingCategory: String!
+  maxWeight: Float!
+  minWeight: Float
+}
+
+type Priority {
+  mailClass: String!
+  mailType: String!
+  zoneBased: Boolean!
+  deliveryDays: Int
+}
+
+type PriorityExpress {
+  mailClass: String!
+  guaranteedDelivery: Boolean!
+  sundayHolidayDelivery: Boolean
+  deliveryDays: Int
+}
+
+type Media {
+  mailClass: String!
+  eligibleMaterials: [String!]
+  maxWeight: Float!
+}
+
+type Ground {
+  mailClass: String!
+  trackingIncluded: Boolean!
+  maxWeight: Float!
+  maxLength: Float
+}
+
+type BulkMail {
+  permitType: String!
+  permitNumber: String
+  processingCategory: String
+}
+
+type BPM {
+  mailClass: String!
+  maxWeight: Float!
+  eligibleItems: [String!]
+}
+
+type Library {
+  mailClass: String!
+  maxWeight: Float!
+  eligibleItems: [String!]
+}
+
+type Express {
+  mailClass: String!
+  scheduledDelivery: String
+  guaranteedByTime: String
+  holdForPickupAvailable: Boolean
+}
+
+# ─── Pricing ─────────────────────────────────────────────────────────────────
+
+enum PriceType {
+  RETAIL
+  CONTRACT
+  COMMERCIAL
+  COMMERCIAL_PLUS
+  NSA
+}
+
+type Price {
+  SKU: String!
+  priceType: PriceType!
+  price: Float!
+  maxWeight: Float
+  fees: [Fee!]
+  extraServices: [ExtraService!]
+  startDate: Date
+  endDate: Date
+}
+
+type PriceDetail {
+  postagePrice: Float!
+  fees: [Fee!]
+  totalBasePrice: Float!
+  totalExtraServicesPrice: Float!
+  totalPrice: Float!
+  priceType: PriceType!
+  zone: String
+}
+
+type Fee {
+  name: String!
+  SKU: String!
+  price: Float!
+}
+
+type ExtraService {
+  extraServiceCode: String!
+  name: String!
+  price: Float
+  warnings: [String!]
+}
+
+type InsuredMail {
+  extraServiceCode: String!
+  insuredValue: Float!
+  price: Float!
+  indemnityLimit: Float
+}
+
+type SignatureConfirmation {
+  extraServiceCode: String!
+  price: Float!
+  adultSignatureRequired: Boolean
+}
+
+type CertifiedMail {
+  extraServiceCode: String!
+  price: Float!
+  electronicDeliveryConfirmation: Boolean
+  returnReceiptElectronic: Boolean
+}
+
+# ─── Labels ───────────────────────────────────────────────────────────────────
+
+type Shipment {
+  shipmentId: String!
+  fromAddress: Address!
+  toAddress: Address!
+  packageDescription: Package!
+  labelAddress: Address
+  customsForm: JSON
+  trackingNumber: TrackingNumber
+  label: Label
+  price: PriceDetail
+  postage: Float
+  extraServices: [ExtraService!]
+  openDistribute: OpenDistribute
+  IMpb: IMpb
+  IMb: IMb
+}
+
+type Label {
+  labelId: String
+  trackingNumber: String!
+  labelImage: String
+  labelFormat: LabelFormat!
+  labelBarcodeImage: String
+  labelType: String
+  createdAt: DateTime
+  expiresAt: DateTime
+}
+
+enum LabelFormat {
+  PDF
+  TIFF
+  SVG
+  PNG
+  ZPL203DPI
+  ZPL300DPI
+  PAPERLESS
+}
+
+type Barcode {
+  barcodeType: String!
+  value: String!
+  height: Float
+  width: Float
+  moduleWidth: Float
+  barHeight: Float
+}
+
+type ReturnLabel {
+  returnTrackingNumber: String!
+  returnLabel: Label!
+  returnAddress: Address!
+  fromAddress: Address!
+  mailClass: MailClass!
+}
+
+type Returns {
+  returnTrackingNumber: String!
+  returnType: String!
+  returnAddress: Address!
+  originalTrackingNumber: String
+  label: ReturnLabel
+}
+
+type ShipFromUSPS {
+  shipmentId: String!
+  packageId: String!
+  serviceType: String!
+  pickupDate: Date
+  returnAddress: Address
+  destinationAddress: Address
+}
+
+type OpenDistribute {
+  openDistributeCode: String!
+  description: String!
+}
+
+type IMpb {
+  barcodeValue: String!
+  barcodeType: String!
+  serialNumber: String
+}
+
+type IMb {
+  barcodeValue: String!
+  routingCode: String
+  serviceType: String
+}
+
+type POBox {
+  POBoxNumber: String!
+  city: String!
+  state: String!
+  ZIPCode: String!
+  POBoxType: String
+  price: Float
+}
+
+# ─── Pickup ───────────────────────────────────────────────────────────────────
+
+type PickupAvailability {
+  confirmationNumber: String
+  dayOfWeek: String!
+  date: Date!
+  addressId: String
+  pickupAddress: Address
+  packages: [PickupPackageSummary!]
+}
+
+type PickupPackageSummary {
+  packageType: String!
+  count: Int!
+}
+
+type PickupSchedule {
+  confirmationNumber: String!
+  pickupDate: Date!
+  estimatedPickupTime: String
+  address: Address!
+  packages: [PickupPackageSummary!]
+  locationPreferences: PickupLocationPreferences
+}
+
+type PickupConfirmation {
+  confirmationNumber: String!
+  pickupDate: Date!
+  address: Address!
+  status: String!
+  specialInstructions: String
+}
+
+type PickupLocationPreferences {
+  pickupLocation: String
+  specialInstructions: String
+}
+
+# ─── Post Office ──────────────────────────────────────────────────────────────
+
+type PostOffice {
+  facilityId: String!
+  name: String!
+  address: Address!
+  phone: String
+  latitude: Float
+  longitude: Float
+  distance: Distance
+  hours: PODays!
+  services: [String!]
+  selfServiceKiosk: Boolean
+}
+
+type POLocations {
+  postOffices: [PostOffice!]!
+  totalCount: Int
+}
+
+type PODays {
+  monday: POHours
+  tuesday: POHours
+  wednesday: POHours
+  thursday: POHours
+  friday: POHours
+  saturday: POHours
+  sunday: POHours
+  holidays: String
+}
+
+type POHours {
+  open: String
+  close: String
+  closed: Boolean
+}
+
+# ─── Service Standards ────────────────────────────────────────────────────────
+
+type ServiceStandards {
+  originZIP: String!
+  destinationZIP: String!
+  mailClass: MailClass!
+  days: StandardDays!
+  effectiveDate: Date
+}
+
+type StandardDays {
+  min: Int!
+  max: Int!
+}
+
+type StandardDate {
+  scheduledDelivery: Date!
+  effectiveDate: Date!
+  acceptanceCutoff: DateTime
+}
+
+# ─── Utilities ───────────────────────────────────────────────────────────────
+
+type Alert {
+  type: AlertType!
+  code: String
+  message: String!
+}
+
+enum AlertType {
+  ERROR
+  WARNING
+  INFO
+}
+
+# ─── Root Operations ──────────────────────────────────────────────────────────
+
+type Query {
+  # Address
+  validateAddress(streetAddress: String!, city: String, state: String, ZIPCode: String): AddressValidation
+  lookupZipCode(ZIPCode: String!): ZipCodeDetails
+  lookupCityState(ZIPCode: String!): CityState
+  lookupZipCodes(city: String!, state: String!): [ZipCode!]
+
+  # Tracking
+  trackPackage(trackingNumber: String!): TrackingSummary
+  trackPackages(trackingNumbers: [String!]!): [TrackingSummary!]
+
+  # Prices
+  getDomesticPrices(
+    originZIPCode: String!
+    destinationZIPCode: String!
+    weight: Float!
+    weightUnit: WeightUnit
+    mailClass: MailClass
+    packageType: PackageType
+    length: Float
+    width: Float
+    height: Float
+    priceType: PriceType
+  ): [Price!]
+  getExtraServices(mailClass: MailClass!, packageType: PackageType): [ExtraService!]
+
+  # Pickup
+  checkPickupAvailability(
+    streetAddress: String!
+    city: String!
+    state: String!
+    ZIPCode: String!
+  ): PickupAvailability
+
+  # Post Offices
+  findPostOffices(ZIPCode: String!, radius: Float, maxResults: Int): POLocations
+
+  # Service Standards
+  getServiceStandards(
+    originZIPCode: String!
+    destinationZIPCode: String!
+    mailClass: MailClass!
+    acceptDate: Date
+  ): ServiceStandards
+
+  # Labels
+  getLabel(labelId: String!): Label
+
+  # POBox
+  getPOBox(ZIPCode: String!): [POBox!]
+}
+
+type Mutation {
+  # Auth
+  requestToken(clientId: String!, clientSecret: String!, scope: String): Token
+
+  # Labels
+  createLabel(shipment: ShipmentInput!): Shipment
+  cancelLabel(trackingNumber: String!): Boolean
+
+  # Returns
+  createReturnLabel(
+    originalTrackingNumber: String!
+    returnAddress: AddressInput!
+  ): ReturnLabel
+
+  # Pickup
+  schedulePickup(
+    address: AddressInput!
+    pickupDate: Date!
+    packages: [PickupPackageInput!]!
+    specialInstructions: String
+  ): PickupConfirmation
+
+  updatePickup(
+    confirmationNumber: String!
+    pickupDate: Date
+    specialInstructions: String
+  ): PickupConfirmation
+
+  cancelPickup(confirmationNumber: String!): Boolean
+}
+
+# ─── Input Types ──────────────────────────────────────────────────────────────
+
+input ShipmentInput {
+  fromAddress: AddressInput!
+  toAddress: AddressInput!
+  packageDescription: PackageInput!
+  labelFormat: LabelFormat
+  extraServices: [String!]
+  imageURL: String
+}
+
+input AddressInput {
+  streetAddress: String!
+  secondaryAddress: String
+  city: String!
+  state: String!
+  ZIPCode: String
+  ZIPPlus4: String
+  urbanization: String
+  name: String
+  firm: String
+}
+
+input PackageInput {
+  mailClass: MailClass!
+  packageType: PackageType!
+  weight: Float!
+  weightUnit: WeightUnit
+  length: Float
+  width: Float
+  height: Float
+  girth: Float
+  rateIndicator: String
+  processingCategory: String
+  destinationEntryFacilityType: String
+  extraServices: [String!]
+}
+
+input PickupPackageInput {
+  packageType: String!
+  count: Int!
+}
