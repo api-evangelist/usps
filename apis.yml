@@ -90,7 +90,7 @@ common:
   url: https://developers.usps.com
 - type: GettingStarted
   url: https://developers.usps.com/getting-started
-- type: SignUp
+- type: Signup
   url: https://developers.usps.com/apis
 - type: GitHub
   url: https://github.com/USPS/api-examples
