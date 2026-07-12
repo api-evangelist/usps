@@ -82,6 +82,8 @@ apis:
   - type: Documentation
     url: https://developers.usps.com/pricesv3
 common:
+- type: DomainSecurity
+  url: security/usps-domain-security.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/usps
 - type: Website
@@ -94,6 +96,8 @@ common:
   url: https://developers.usps.com/apis
 - type: GitHub
   url: https://github.com/USPS/api-examples
+- url: https://about.usps.com/news/latestnews.rss
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
