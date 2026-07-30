@@ -7,7 +7,18 @@ description: The United States Postal Service (USPS) provides a modern suite of 
   Credentials for authentication. The platform supports both production and TEM (Testing
   Environment for Mailers) endpoints for developing and validating shipping integrations.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/usps.png
 tags:
 - Shipping
 - Postal
