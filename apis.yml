@@ -38,6 +38,8 @@ apis:
   humanURL: https://developers.usps.com/Oauth
   baseURL: https://apis.usps.com/oauth2/v3
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   - Authentication
   properties:
