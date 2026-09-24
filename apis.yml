@@ -1,127 +1,475 @@
-aid: usps
-name: USPS
-description: The United States Postal Service (USPS) provides a modern suite of RESTful
-  APIs for address validation, domestic and international pricing, shipping label
-  creation and cancellation, tracking, and service standards through its developer
-  portal. The APIs replace the legacy Web Tools platform and use OAuth 2.0 Client
-  Credentials for authentication. The platform supports both production and TEM (Testing
-  Environment for Mailers) endpoints for developing and validating shipping integrations.
-type: Index
+name: United States Postal Service
+description: >-
+  The United States Postal Service (USPS) provides a modern REST API platform at developers.usps.com that gives
+  ecommerce websites, shipping software, and logistics systems access to postal data and services. APIs cover address
+  validation, package tracking, domestic and international shipping labels, pricing, carrier pickup scheduling, location
+  finding, and Informed Delivery campaign management. The legacy Web Tools platform was retired January 25, 2026, with
+  all functionality migrated to the new OAuth 2.0-secured API platform.
 deliveryModel:
   model: saas
   open_source: false
   commercial: true
-  callable_host: false
+  callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: medium
+  confidence: high
   source:
+  - openapi
   - pricing
   generated: '2026-08-28'
   method: derived
 accessModel:
-  pricing: unknown
-  onboarding: unknown
+  pricing: freemium
+  onboarding: self-serve
   trial: false
-  try_now: false
+  try_now: true
   public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
+  label: Freemium · Self-serve signup
+  confidence: medium
+  source:
+  - plans
+  - authentication
+  - security
+  generated: '2026-09-03'
   method: derived
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/usps.png
-tags:
-- Shipping
-- Postal
-- Address Validation
-- Tracking
-- Labels
-- Logistics
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/united-states-postal-service.png
 url: https://raw.githubusercontent.com/api-evangelist/usps/refs/heads/main/apis.yml
-created: '2026-05-11'
-modified: '2026-05-11'
+created: 2024/01/01
+modified: '2026-05-19'
 specificationVersion: '0.23'
-apis:
-- aid: usps:oauth2
-  name: USPS OAuth 2.0
-  description: Token endpoint for OAuth 2.0 Client Credentials authentication used
-    to authorize requests to all USPS API products.
-  humanURL: https://developers.usps.com/Oauth
-  baseURL: https://apis.usps.com/oauth2/v3
-  tags:
-  - Authentication
-  tags_raw:
-  - OAuth
-  - Authentication
-  properties:
-  - type: Documentation
-    url: https://developers.usps.com/Oauth
-  - url: graphql/usps-graphql.md
-    type: GraphQL
-- aid: usps:addresses
-  name: USPS Addresses API
-  description: Verify and standardize US addresses to USPS specifications, reducing
-    shipping delays and errors.
-  humanURL: https://developers.usps.com/addressesv3
-  baseURL: https://apis.usps.com/addresses/v3
-  tags:
-  - Address Validation
-  properties:
-  - type: Documentation
-    url: https://developers.usps.com/addressesv3
-- aid: usps:tracking
-  name: USPS Tracking API
-  description: Retrieve tracking status and delivery events for shipped packages across
-    USPS services.
-  humanURL: https://developers.usps.com/trackingv3
-  baseURL: https://apis.usps.com/tracking/v3
-  tags:
-  - Tracking
+tags:
+  - Government
+  - Postal Service
   - Shipping
+  - Logistics
+  - Address Validation
+  - Package Tracking
+apis:
+- name: USPS International Prices API
+  description: >-
+    Provides pricing for international USPS products based on shipment characteristics including destination
+    country, weight, dimensions, and service class.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/internationalpricesv3
+  baseURL: https://apis.usps.com
+  tags:
+  - International
+  - Pricing
+  - Postage
+  - Government
   properties:
   - type: Documentation
-    url: https://developers.usps.com/trackingv3
-- aid: usps:labels
-  name: USPS Labels API
-  description: Create and cancel domestic shipping labels with integrated address
-    standardization, pricing, and manifesting.
-  humanURL: https://developers.usps.com/labelsv3
-  baseURL: https://apis.usps.com/labels/v3
+    url: https://developers.usps.com/internationalpricesv3
+  aid: usps:usps-international-prices-api
+- name: USPS Domestic Labels API
+  description: >-
+    Creates domestic shipping labels with barcodes in multiple formats and generates Shipping Services
+    Files. Requires USPS Ship enrollment and Enterprise Payment Account.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/domesticlabelsv3
+  baseURL: https://apis.usps.com
   tags:
   - Labels
   - Shipping
+  - Government
   properties:
   - type: Documentation
-    url: https://developers.usps.com/labelsv3
-- aid: usps:prices
-  name: USPS Domestic Prices API
-  description: Retrieve current pricing information for USPS domestic shipping products
-    and services.
-  humanURL: https://developers.usps.com/pricesv3
-  baseURL: https://apis.usps.com/prices/v3
+    url: https://developers.usps.com/domesticlabelsv3
+  aid: usps:labels
+- name: USPS International Labels API
+  description: >-
+    Creates international shipping labels and generates required Shipping Services Files for customs compliance.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/internationallabelsv3
+  baseURL: https://apis.usps.com
   tags:
-  - Pricing
+  - International
+  - Labels
   - Shipping
+  - Government
   properties:
   - type: Documentation
-    url: https://developers.usps.com/pricesv3
+    url: https://developers.usps.com/internationallabelsv3
+  aid: usps:usps-international-labels-api
+- name: USPS Locations API
+  description: >-
+    Identifies drop-off facilities and destination entry points for various USPS services. Supports post
+    office locator and drop-off location finder.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/locationsv3
+  baseURL: https://apis.usps.com
+  tags:
+  - Location
+  - Post Offices
+  - Government
+  tags_raw:
+  - Locations
+  - Post Offices
+  - Government
+  properties:
+  - type: Documentation
+    url: https://developers.usps.com/locationsv3
+  aid: usps:usps-locations-api
+- name: USPS Service Standards API
+  description: >-
+    Provides delivery benchmarks showing expected transit times between origin and destination ZIP Codes
+    for USPS mail classes.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/standardsv3
+  baseURL: https://apis.usps.com
+  tags:
+  - Service Standards
+  - Delivery
+  - Government
+  properties:
+  - type: Documentation
+    url: https://developers.usps.com/standardsv3
+  aid: usps:usps-service-standards-api
+- name: USPS Shipping Options API
+  description: >-
+    Returns a comprehensive list of pricing, service standards, and shipping options for USPS products
+    in a single API call, eliminating the need to query multiple APIs separately.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/shippingoptionsv3
+  baseURL: https://apis.usps.com
+  tags:
+  - Shipping
+  - Pricing
+  - Government
+  properties:
+  - type: Documentation
+    url: https://developers.usps.com/shippingoptionsv3
+  aid: usps:usps-shipping-options-api
+- name: USPS SCAN Forms API
+  description: >-
+    Links multiple domestic and international labels through a single electronic file number, creating
+    Shipment Confirmation Acceptance Notice forms for batch shipping operations.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/scanv3
+  baseURL: https://apis.usps.com
+  tags:
+  - SCAN Forms
+  - Shipping
+  - Government
+  properties:
+  - type: Documentation
+    url: https://developers.usps.com/scanv3
+  aid: usps:usps-scan-forms-api
+- name: USPS OAuth API
+  description: >-
+    Industry-standard OAuth 2.0 Client Credentials authentication protecting access to all USPS APIs.
+    Returns Bearer Tokens used in the Authorization header for all USPS API calls.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developers.usps.com/Oauth
+  baseURL: https://apis.usps.com
+  tags:
+  - Authentication
+  - Government
+  tags_raw:
+  - Authentication
+  - OAuth
+  - Government
+  properties:
+  - type: Documentation
+    url: https://developers.usps.com/Oauth
+  - type: Authentication
+    url: https://developers.usps.com/getting-started
+  aid: usps:oauth2
+- aid: usps:addresses
+  name: United States Postal Service Addresses API
+  description: Address validation and standardization operations
+  humanURL: https://developers.usps.com/addressesv3
+  baseURL: https://apis.usps.com
+  tags:
+  - Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-postal-service-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://developers.usps.com/addressesv3
+  - type: JSONSchema
+    url: json-schema/addresses-address-schema.json
+  - type: JSONSchema
+    url: json-schema/addresses-city-state-schema.json
+  - type: JSONStructure
+    url: json-structure/addresses-address-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-addresses-context.jsonld
+  - type: Examples
+    url: examples/addresses-address-example.json
+  - type: Documentation
+    url: https://developers.usps.com/trackingv3r2
+  - type: JSONSchema
+    url: json-schema/tracking-tracking-event-schema.json
+  - type: JSONStructure
+    url: json-structure/tracking-tracking-event-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-tracking-context.jsonld
+  - type: Examples
+    url: examples/tracking-tracking-event-example.json
+  - type: Documentation
+    url: https://developers.usps.com/domesticpricesv3
+  - type: JSONSchema
+    url: json-schema/domestic-prices-base-rate-request-schema.json
+  - type: JSONStructure
+    url: json-structure/domestic-prices-base-rate-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-domestic-context.jsonld
+  - type: Examples
+    url: examples/domestic-prices-base-rate-request-example.json
+  - type: Documentation
+    url: https://developers.usps.com/carrierpickupv3
+  - type: JSONSchema
+    url: json-schema/carrier-pickup-pickup-request-schema.json
+  - type: JSONStructure
+    url: json-structure/carrier-pickup-pickup-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-carrier-context.jsonld
+  - type: Examples
+    url: examples/carrier-pickup-pickup-request-example.json
+- aid: usps:usps-carrier-pickup-api
+  name: United States Postal Service Carrier Pickup API
+  description: Schedule and manage USPS carrier pickup requests
+  humanURL: https://developers.usps.com/addressesv3
+  baseURL: https://apis.usps.com
+  tags:
+  - Carrier Pickup
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-postal-service-carrier-pickup-api-openapi.yml
+  - type: Documentation
+    url: https://developers.usps.com/addressesv3
+  - type: JSONSchema
+    url: json-schema/addresses-address-schema.json
+  - type: JSONSchema
+    url: json-schema/addresses-city-state-schema.json
+  - type: JSONStructure
+    url: json-structure/addresses-address-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-addresses-context.jsonld
+  - type: Examples
+    url: examples/addresses-address-example.json
+  - type: Documentation
+    url: https://developers.usps.com/trackingv3r2
+  - type: JSONSchema
+    url: json-schema/tracking-tracking-event-schema.json
+  - type: JSONStructure
+    url: json-structure/tracking-tracking-event-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-tracking-context.jsonld
+  - type: Examples
+    url: examples/tracking-tracking-event-example.json
+  - type: Documentation
+    url: https://developers.usps.com/domesticpricesv3
+  - type: JSONSchema
+    url: json-schema/domestic-prices-base-rate-request-schema.json
+  - type: JSONStructure
+    url: json-structure/domestic-prices-base-rate-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-domestic-context.jsonld
+  - type: Examples
+    url: examples/domestic-prices-base-rate-request-example.json
+  - type: Documentation
+    url: https://developers.usps.com/carrierpickupv3
+  - type: JSONSchema
+    url: json-schema/carrier-pickup-pickup-request-schema.json
+  - type: JSONStructure
+    url: json-structure/carrier-pickup-pickup-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-carrier-context.jsonld
+  - type: Examples
+    url: examples/carrier-pickup-pickup-request-example.json
+- aid: usps:prices
+  name: United States Postal Service Domestic Prices API
+  description: Domestic postage pricing and rate calculation operations
+  humanURL: https://developers.usps.com/addressesv3
+  baseURL: https://apis.usps.com
+  tags:
+  - Domestic Prices
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-postal-service-domestic-prices-api-openapi.yml
+  - type: Documentation
+    url: https://developers.usps.com/addressesv3
+  - type: JSONSchema
+    url: json-schema/addresses-address-schema.json
+  - type: JSONSchema
+    url: json-schema/addresses-city-state-schema.json
+  - type: JSONStructure
+    url: json-structure/addresses-address-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-addresses-context.jsonld
+  - type: Examples
+    url: examples/addresses-address-example.json
+  - type: Documentation
+    url: https://developers.usps.com/trackingv3r2
+  - type: JSONSchema
+    url: json-schema/tracking-tracking-event-schema.json
+  - type: JSONStructure
+    url: json-structure/tracking-tracking-event-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-tracking-context.jsonld
+  - type: Examples
+    url: examples/tracking-tracking-event-example.json
+  - type: Documentation
+    url: https://developers.usps.com/domesticpricesv3
+  - type: JSONSchema
+    url: json-schema/domestic-prices-base-rate-request-schema.json
+  - type: JSONStructure
+    url: json-structure/domestic-prices-base-rate-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-domestic-context.jsonld
+  - type: Examples
+    url: examples/domestic-prices-base-rate-request-example.json
+  - type: Documentation
+    url: https://developers.usps.com/carrierpickupv3
+  - type: JSONSchema
+    url: json-schema/carrier-pickup-pickup-request-schema.json
+  - type: JSONStructure
+    url: json-structure/carrier-pickup-pickup-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-carrier-context.jsonld
+  - type: Examples
+    url: examples/carrier-pickup-pickup-request-example.json
+- aid: usps:tracking
+  name: United States Postal Service Tracking API
+  description: Package tracking status and event operations
+  humanURL: https://developers.usps.com/addressesv3
+  baseURL: https://apis.usps.com
+  tags:
+  - Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/united-states-postal-service-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://developers.usps.com/addressesv3
+  - type: JSONSchema
+    url: json-schema/addresses-address-schema.json
+  - type: JSONSchema
+    url: json-schema/addresses-city-state-schema.json
+  - type: JSONStructure
+    url: json-structure/addresses-address-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-addresses-context.jsonld
+  - type: Examples
+    url: examples/addresses-address-example.json
+  - type: Documentation
+    url: https://developers.usps.com/trackingv3r2
+  - type: JSONSchema
+    url: json-schema/tracking-tracking-event-schema.json
+  - type: JSONStructure
+    url: json-structure/tracking-tracking-event-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-tracking-context.jsonld
+  - type: Examples
+    url: examples/tracking-tracking-event-example.json
+  - type: Documentation
+    url: https://developers.usps.com/domesticpricesv3
+  - type: JSONSchema
+    url: json-schema/domestic-prices-base-rate-request-schema.json
+  - type: JSONStructure
+    url: json-structure/domestic-prices-base-rate-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-domestic-context.jsonld
+  - type: Examples
+    url: examples/domestic-prices-base-rate-request-example.json
+  - type: Documentation
+    url: https://developers.usps.com/carrierpickupv3
+  - type: JSONSchema
+    url: json-schema/carrier-pickup-pickup-request-schema.json
+  - type: JSONStructure
+    url: json-structure/carrier-pickup-pickup-request-structure.json
+  - type: JSONLD
+    url: json-ld/united-states-postal-service-carrier-context.jsonld
+  - type: Examples
+    url: examples/carrier-pickup-pickup-request-example.json
 common:
-- type: DomainSecurity
-  url: security/usps-domain-security.yml
-- type: LinkedIn
-  url: https://www.linkedin.com/company/usps
-- type: Website
-  url: https://www.usps.com
-- type: Documentation
-  url: https://developers.usps.com
-- type: GettingStarted
-  url: https://developers.usps.com/getting-started
-- type: Signup
-  url: https://developers.usps.com/apis
-- type: GitHub
-  url: https://github.com/USPS/api-examples
-- url: https://about.usps.com/news/latestnews.rss
-  type: Blog
+  - type: Website
+    url: https://www.usps.com/
+  - type: AgenticAccess
+    url: agentic-access/united-states-postal-service-agentic-access.yml
+  - type: DomainSecurity
+    url: security/united-states-postal-service-domain-security.yml
+  - type: Authentication
+    url: authentication/united-states-postal-service-authentication.yml
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/usps
+  - type: Portal
+    url: https://developers.usps.com/
+  - type: GettingStarted
+    url: https://developers.usps.com/getting-started
+  - type: Documentation
+    url: https://developers.usps.com/apis
+  - type: TermsOfService
+    url: https://developers.usps.com/terms-and-conditions
+  - type: FAQ
+    url: https://developers.usps.com/faq
+  - type: Support
+    url: https://emailus.usps.com/s/web-tools-inquiry
+  - type: GitHubOrganization
+    url: https://github.com/USPS
+  - type: GitHubRepository
+    url: https://github.com/USPS/api-examples
+  - type: Blog
+    url: https://about.usps.com/news/latestnews.rss
+  - type: Features
+    data:
+      - name: OAuth 2.0 Authentication
+        description: Secure API access using industry-standard OAuth 2.0 Client Credentials flow with Bearer Token authentication.
+      - name: RESTful Architecture
+        description: All APIs follow RESTful conventions with JSON request and response bodies.
+      - name: Sandbox Testing Environment
+        description: Testing Environment for Mailers (TEM) at apis-tem.usps.com for safe API testing before going to production.
+      - name: Address Standardization
+        description: USPS Coding Accuracy Support System (CASS) compliant address validation and standardization.
+      - name: Delivery Point Validation
+        description: DPV confirmation codes ensure packages can be delivered to the validated address.
+      - name: Real-Time Tracking
+        description: Live package tracking with scan events, timestamps, and location details from USPS systems.
+      - name: Webhook Subscriptions
+        description: Event-driven subscription APIs for tracking events, adjustments, and disputes delivered via webhooks.
+      - name: Batch Processing
+        description: Support for bulk operations including multiple tracking lookups and SCAN Form generation.
+  - type: UseCases
+    data:
+      - name: E-Commerce Shipping Integration
+        description: >-
+          Calculate shipping rates, generate labels, and provide package tracking directly within e-commerce checkout
+          flows.
+      - name: Address Verification at Checkout
+        description: Validate and standardize customer addresses during checkout to reduce failed deliveries and return rates.
+      - name: Shipping Label Generation
+        description: >-
+          Programmatically create domestic and international USPS shipping labels with barcodes for fulfillment
+          operations.
+      - name: Carrier Pickup Automation
+        description: Schedule and manage USPS carrier pickups automatically based on order fulfillment triggers.
+      - name: Logistics Rate Shopping
+        description: Compare USPS service options and pricing to select the most cost-effective shipping method.
+      - name: Delivery Time Estimation
+        description: Display accurate expected delivery dates to customers using USPS service standards data.
+      - name: Post Office Finder
+        description: Help customers locate the nearest USPS facility for drop-offs or in-person services.
+      - name: Informed Delivery Campaigns
+        description: Enhance customer engagement by adding digital content to mail pieces viewed through Informed Delivery.
+  - type: Integrations
+    data:
+      - name: Shopify
+        description: USPS shipping integration available through Shopify Shipping for label generation and rate calculation.
+      - name: WooCommerce
+        description: WooCommerce shipping plugins integrate USPS APIs for rate calculation and label printing.
+      - name: Magento
+        description: Adobe Commerce and Magento integrate USPS for shipping rate display and fulfillment.
+      - name: ShipStation
+        description: ShipStation multi-carrier shipping platform integrates USPS APIs for ecommerce fulfillment.
+      - name: EasyPost
+        description: EasyPost shipping API aggregator provides access to USPS services alongside other carriers.
+      - name: Stamps.com
+        description: Stamps.com and Pitney Bowes shipping platforms integrate USPS APIs for postage and label printing.
+  - type: SpectralRules
+    url: rules/united-states-postal-service-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/united-states-postal-service-vocabulary.yaml
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+aid: usps
