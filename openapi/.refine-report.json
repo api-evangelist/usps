@@ -1,0 +1,40 @@
+{
+  "provider": "usps",
+  "sources": [
+    "_ae-authored/united-states-postal-service-addresses-openapi.yml",
+    "_ae-authored/united-states-postal-service-carrier-pickup-openapi.yml",
+    "_ae-authored/united-states-postal-service-domestic-prices-openapi.yml",
+    "_ae-authored/united-states-postal-service-tracking-openapi.yml",
+    "united-states-postal-service-addresses-api-openapi.yml",
+    "united-states-postal-service-carrier-pickup-api-openapi.yml",
+    "united-states-postal-service-domestic-prices-api-openapi.yml",
+    "united-states-postal-service-tracking-api-openapi.yml"
+  ],
+  "outputs": [
+    "usps-addresses-api-openapi.yml",
+    "usps-carrier-pickup-api-openapi.yml",
+    "usps-domestic-prices-api-openapi.yml",
+    "usps-tracking-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/united-states-postal-service-addresses-api-openapi.yml",
+    "archived openapi/united-states-postal-service-carrier-pickup-api-openapi.yml",
+    "archived openapi/united-states-postal-service-domestic-prices-api-openapi.yml",
+    "archived openapi/united-states-postal-service-tracking-api-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "united-states-postal-service-addresses-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "united-states-postal-service-carrier-pickup-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "united-states-postal-service-domestic-prices-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "united-states-postal-service-tracking-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Addresses' spans 2 source specs (united-states-postal-service-addresses-openapi.yml, united-states-postal-service-addresses-api-openapi.yml): per-path servers applied",
+    "tag 'Carrier Pickup' spans 2 source specs (united-states-postal-service-carrier-pickup-openapi.yml, united-states-postal-service-carrier-pickup-api-openapi.yml): per-path servers applied",
+    "tag 'Domestic Prices' spans 2 source specs (united-states-postal-service-domestic-prices-openapi.yml, united-states-postal-service-domestic-prices-api-openapi.yml): per-path servers applied",
+    "tag 'Tracking' spans 2 source specs (united-states-postal-service-tracking-openapi.yml, united-states-postal-service-tracking-api-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+4 apis, 12 total)"
+  ],
+  "skipped": []
+}

@@ -1,0 +1,459 @@
+openapi: 3.1.0
+info:
+  title: USPS Domestic Prices API
+  description: >-
+    The USPS Domestic Prices API provides postage pricing based on origin and
+    destination ZIP Codes, weight, dimensions, and mail class. Supports base rate
+    lookups, extra service rates, and total rate calculations.
+  version: '3.0'
+  contact:
+    name: USPS API Support
+    url: https://developers.usps.com/
+  x-generated-from: documentation
+externalDocs:
+  description: USPS Domestic Prices API Documentation
+  url: https://developers.usps.com/domesticpricesv3
+servers:
+  - url: https://apis.usps.com
+    description: Production
+  - url: https://apis-tem.usps.com
+    description: Testing Environment for Mailers (TEM)
+tags:
+  - name: Domestic Prices
+    description: Domestic postage pricing and rate calculation operations
+security:
+  - bearerAuth: []
+paths:
+  /prices/v3/base-rates/search:
+    post:
+      operationId: searchBaseRates
+      summary: USPS Domestic Prices Search Base Rates
+      description: >-
+        Returns base postage rates for domestic shipments based on origin and
+        destination ZIP Codes, weight, dimensions, and mail class.
+      tags:
+        - Domestic Prices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BaseRateRequest'
+            examples:
+              SearchBaseRatesRequestExample:
+                summary: Default searchBaseRates request
+                x-microcks-default: true
+                value:
+                  originZIPCode: '20212'
+                  destinationZIPCode: '90210'
+                  weight: 1.5
+                  length: 12.0
+                  width: 8.0
+                  height: 4.0
+                  mailClass: 'PRIORITY_MAIL'
+                  processingCategory: 'MACHINABLE'
+                  destinationEntryFacilityType: 'NONE'
+                  rateIndicator: 'DR'
+      responses:
+        '200':
+          description: Base rates returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateResponse'
+              examples:
+                SearchBaseRates200Example:
+                  summary: Default searchBaseRates 200 response
+                  x-microcks-default: true
+                  value:
+                    rates:
+                      - skuCode: 'DPXX0XXXXB00020'
+                        description: 'Priority Mail'
+                        price: 8.70
+                        maxWeight: 70
+                        fees: []
+        '400':
+          description: Bad request - invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /prices/v3/extra-service-rates/search:
+    post:
+      operationId: searchExtraServiceRates
+      summary: USPS Domestic Prices Search Extra Service Rates
+      description: >-
+        Returns rates for additional USPS services such as insurance, signature
+        confirmation, certified mail, and other extra services.
+      tags:
+        - Domestic Prices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtraServiceRateRequest'
+            examples:
+              SearchExtraServiceRatesRequestExample:
+                summary: Default searchExtraServiceRates request
+                x-microcks-default: true
+                value:
+                  originZIPCode: '20212'
+                  destinationZIPCode: '90210'
+                  extraServiceCode: '955'
+                  mailClass: 'PRIORITY_MAIL'
+                  weight: 1.5
+      responses:
+        '200':
+          description: Extra service rates returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtraServiceRateResponse'
+              examples:
+                SearchExtraServiceRates200Example:
+                  summary: Default searchExtraServiceRates 200 response
+                  x-microcks-default: true
+                  value:
+                    extraServices:
+                      - extraServiceCode: '955'
+                        name: 'Signature Confirmation'
+                        price: 3.80
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /prices/v3/total-rates/search:
+    post:
+      operationId: searchTotalRates
+      summary: USPS Domestic Prices Search Total Rates
+      description: >-
+        Returns total postage rates including base rate plus any extra service fees
+        for domestic shipments. Provides a single total price for the complete
+        shipping configuration.
+      tags:
+        - Domestic Prices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TotalRateRequest'
+            examples:
+              SearchTotalRatesRequestExample:
+                summary: Default searchTotalRates request
+                x-microcks-default: true
+                value:
+                  originZIPCode: '20212'
+                  destinationZIPCode: '90210'
+                  weight: 1.5
+                  length: 12.0
+                  width: 8.0
+                  height: 4.0
+                  mailClass: 'PRIORITY_MAIL'
+                  extraServices:
+                    - extraServiceCode: '955'
+      responses:
+        '200':
+          description: Total rates returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TotalRateResponse'
+              examples:
+                SearchTotalRates200Example:
+                  summary: Default searchTotalRates 200 response
+                  x-microcks-default: true
+                  value:
+                    rates:
+                      - totalBasePrice: 8.70
+                        totalPrice: 12.50
+                        fees:
+                          - name: 'Signature Confirmation'
+                            price: 3.80
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer Token.
+  schemas:
+    BaseRateRequest:
+      type: object
+      required:
+        - originZIPCode
+        - destinationZIPCode
+        - weight
+        - mailClass
+      description: Request parameters for base rate search.
+      properties:
+        originZIPCode:
+          type: string
+          description: 5-digit origin ZIP Code.
+          example: '20212'
+        destinationZIPCode:
+          type: string
+          description: 5-digit destination ZIP Code.
+          example: '90210'
+        weight:
+          type: number
+          description: Package weight in pounds.
+          example: 1.5
+        length:
+          type: number
+          description: Package length in inches.
+          example: 12.0
+        width:
+          type: number
+          description: Package width in inches.
+          example: 8.0
+        height:
+          type: number
+          description: Package height in inches.
+          example: 4.0
+        mailClass:
+          type: string
+          description: USPS mail class for the shipment.
+          enum:
+            - PRIORITY_MAIL
+            - PRIORITY_MAIL_EXPRESS
+            - FIRST_CLASS_PACKAGE_SERVICE
+            - PARCEL_SELECT
+            - MEDIA_MAIL
+            - LIBRARY_MAIL
+            - BOUND_PRINTED_MATTER
+          example: 'PRIORITY_MAIL'
+        processingCategory:
+          type: string
+          description: Processing category for the package.
+          enum:
+            - MACHINABLE
+            - NON_MACHINABLE
+            - IRREGULAR
+            - LETTERS
+            - FLATS
+          example: 'MACHINABLE'
+        destinationEntryFacilityType:
+          type: string
+          description: Type of destination entry facility.
+          enum:
+            - NONE
+            - DESTINATION_DELIVERY_UNIT
+            - DESTINATION_SERVICE_FACILITY
+            - DESTINATION_SECTIONAL_CENTER_FACILITY
+            - DESTINATION_BULK_MAIL_CENTER
+          example: 'NONE'
+        rateIndicator:
+          type: string
+          description: Rate indicator code for special rate categories.
+          example: 'DR'
+    ExtraServiceRateRequest:
+      type: object
+      required:
+        - extraServiceCode
+        - mailClass
+      description: Request parameters for extra service rate search.
+      properties:
+        originZIPCode:
+          type: string
+          description: 5-digit origin ZIP Code.
+          example: '20212'
+        destinationZIPCode:
+          type: string
+          description: 5-digit destination ZIP Code.
+          example: '90210'
+        extraServiceCode:
+          type: string
+          description: Code identifying the extra service.
+          example: '955'
+        mailClass:
+          type: string
+          description: USPS mail class.
+          example: 'PRIORITY_MAIL'
+        weight:
+          type: number
+          description: Package weight in pounds.
+          example: 1.5
+    TotalRateRequest:
+      type: object
+      required:
+        - originZIPCode
+        - destinationZIPCode
+        - weight
+        - mailClass
+      description: Request parameters for total rate search.
+      properties:
+        originZIPCode:
+          type: string
+          description: 5-digit origin ZIP Code.
+          example: '20212'
+        destinationZIPCode:
+          type: string
+          description: 5-digit destination ZIP Code.
+          example: '90210'
+        weight:
+          type: number
+          description: Package weight in pounds.
+          example: 1.5
+        length:
+          type: number
+          description: Package length in inches.
+          example: 12.0
+        width:
+          type: number
+          description: Package width in inches.
+          example: 8.0
+        height:
+          type: number
+          description: Package height in inches.
+          example: 4.0
+        mailClass:
+          type: string
+          description: USPS mail class.
+          example: 'PRIORITY_MAIL'
+        extraServices:
+          type: array
+          description: List of extra services to include in total rate.
+          items:
+            type: object
+            properties:
+              extraServiceCode:
+                type: string
+                description: Extra service code.
+                example: '955'
+    RateResponse:
+      type: object
+      description: Base rate search response.
+      properties:
+        rates:
+          type: array
+          description: List of available rates for the requested criteria.
+          items:
+            type: object
+            properties:
+              skuCode:
+                type: string
+                description: USPS SKU code for the rate.
+                example: 'DPXX0XXXXB00020'
+              description:
+                type: string
+                description: Human-readable rate description.
+                example: 'Priority Mail'
+              price:
+                type: number
+                description: Rate price in USD.
+                example: 8.70
+              maxWeight:
+                type: number
+                description: Maximum weight in pounds for this rate.
+                example: 70
+              fees:
+                type: array
+                description: Additional fees included in this rate.
+                items:
+                  type: object
+    ExtraServiceRateResponse:
+      type: object
+      description: Extra service rate response.
+      properties:
+        extraServices:
+          type: array
+          description: List of extra service rates.
+          items:
+            type: object
+            properties:
+              extraServiceCode:
+                type: string
+                description: Extra service code.
+                example: '955'
+              name:
+                type: string
+                description: Name of the extra service.
+                example: 'Signature Confirmation'
+              price:
+                type: number
+                description: Price for the extra service in USD.
+                example: 3.80
+    TotalRateResponse:
+      type: object
+      description: Total rate response including base and extra service rates.
+      properties:
+        rates:
+          type: array
+          description: List of total rates.
+          items:
+            type: object
+            properties:
+              totalBasePrice:
+                type: number
+                description: Base postage price in USD.
+                example: 8.70
+              totalPrice:
+                type: number
+                description: Total price including all fees in USD.
+                example: 12.50
+              fees:
+                type: array
+                description: Breakdown of additional fees.
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Fee name.
+                      example: 'Signature Confirmation'
+                    price:
+                      type: number
+                      description: Fee amount in USD.
+                      example: 3.80
+    Error:
+      type: object
+      description: API error response.
+      properties:
+        apiVersion:
+          type: string
+          example: '3.0'
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: 'PRICE_ERR_001'
+            message:
+              type: string
+              example: 'Invalid mail class'

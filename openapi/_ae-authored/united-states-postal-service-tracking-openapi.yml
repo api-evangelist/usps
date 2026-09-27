@@ -1,0 +1,313 @@
+openapi: 3.1.0
+info:
+  title: USPS Tracking API
+  description: >-
+    The USPS Tracking API returns tracking status and related details for a given USPS
+    package, including scan events with date, time, and location. Supports single and
+    multiple package tracking requests.
+  version: '3.2'
+  contact:
+    name: USPS API Support
+    url: https://developers.usps.com/
+  x-generated-from: documentation
+externalDocs:
+  description: USPS Tracking API Documentation
+  url: https://developers.usps.com/trackingv3r2
+servers:
+  - url: https://apis.usps.com
+    description: Production
+  - url: https://apis-tem.usps.com
+    description: Testing Environment for Mailers (TEM)
+tags:
+  - name: Tracking
+    description: Package tracking status and event operations
+security:
+  - bearerAuth: []
+paths:
+  /tracking/v3/tracking/{trackingNumber}:
+    get:
+      operationId: getTracking
+      summary: USPS Tracking Get Package Tracking Status
+      description: >-
+        Returns the tracking status and complete scan event history for a given
+        USPS tracking number. Includes delivery status, estimated delivery date,
+        and location details for each scan event.
+      tags:
+        - Tracking
+      parameters:
+        - name: trackingNumber
+          in: path
+          required: true
+          description: The USPS tracking number for the package.
+          schema:
+            type: string
+          example: '9400111899223397910390'
+        - name: expand
+          in: query
+          required: false
+          description: Optional expansion for additional detail fields (e.g. SUMMARY).
+          schema:
+            type: string
+            enum:
+              - SUMMARY
+              - DETAIL
+          example: 'SUMMARY'
+      responses:
+        '200':
+          description: Tracking information returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackingResult'
+              examples:
+                GetTracking200Example:
+                  summary: Default getTracking 200 response
+                  x-microcks-default: true
+                  value:
+                    TrackSummary:
+                      EventTime: '8:00 am'
+                      EventDate: 'March 14, 2025'
+                      Event: 'DELIVERED'
+                      EventCity: 'WASHINGTON'
+                      EventState: 'DC'
+                      EventZIPCode: '20212'
+                      EventCountry: ''
+                      FirmName: ''
+                      Name: 'JOHN DOE'
+                      AuthorizedAgent: 'false'
+                      DeliveryAttributeCode: '01'
+                    TrackDetail:
+                      - EventTime: '7:00 am'
+                        EventDate: 'March 14, 2025'
+                        Event: 'OUT FOR DELIVERY'
+                        EventCity: 'WASHINGTON'
+                        EventState: 'DC'
+                        EventZIPCode: '20212'
+                        EventCountry: ''
+        '400':
+          description: Bad request - invalid tracking number format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid or missing bearer token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Tracking number not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /tracking/v3/tracking:
+    post:
+      operationId: getMultipleTracking
+      summary: USPS Tracking Get Multiple Package Tracking Status
+      description: >-
+        Returns tracking status for multiple USPS packages in a single request.
+        Accepts up to 10 tracking numbers per request.
+      tags:
+        - Tracking
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultipleTrackingRequest'
+            examples:
+              GetMultipleTrackingRequestExample:
+                summary: Default getMultipleTracking request
+                x-microcks-default: true
+                value:
+                  trackingNumbers:
+                    - '9400111899223397910390'
+                    - '9400111899223397910407'
+      responses:
+        '200':
+          description: Tracking information returned for all requested packages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultipleTrackingResult'
+              examples:
+                GetMultipleTracking200Example:
+                  summary: Default getMultipleTracking 200 response
+                  x-microcks-default: true
+                  value:
+                    trackingResults:
+                      - trackingNumber: '9400111899223397910390'
+                        status: 'DELIVERED'
+                        deliveryDate: '2025-03-14'
+                      - trackingNumber: '9400111899223397910407'
+                        status: 'IN_TRANSIT'
+                        deliveryDate: '2025-03-15'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer Token obtained from the USPS OAuth API.
+  schemas:
+    TrackingEvent:
+      type: object
+      description: A single tracking scan event for a package.
+      properties:
+        EventTime:
+          type: string
+          description: Time of the tracking event.
+          example: '8:00 am'
+        EventDate:
+          type: string
+          description: Date of the tracking event.
+          example: 'March 14, 2025'
+        Event:
+          type: string
+          description: Description of the tracking event.
+          example: 'DELIVERED'
+        EventCity:
+          type: string
+          description: City where the event occurred.
+          example: 'WASHINGTON'
+        EventState:
+          type: string
+          description: State where the event occurred.
+          example: 'DC'
+        EventZIPCode:
+          type: string
+          description: ZIP Code of the event location.
+          example: '20212'
+        EventCountry:
+          type: string
+          description: Country where the event occurred (empty for domestic).
+          example: ''
+        FirmName:
+          type: string
+          description: Company name for business deliveries.
+          example: ''
+        Name:
+          type: string
+          description: Recipient name if available.
+          example: 'JOHN DOE'
+        AuthorizedAgent:
+          type: string
+          description: Whether delivered to an authorized agent.
+          example: 'false'
+        DeliveryAttributeCode:
+          type: string
+          description: Code indicating delivery type or condition.
+          example: '01'
+    TrackingResult:
+      type: object
+      description: Tracking result for a single package.
+      properties:
+        TrackSummary:
+          $ref: '#/components/schemas/TrackingEvent'
+          description: Most recent tracking event summary.
+        TrackDetail:
+          type: array
+          description: Full list of historical tracking events.
+          items:
+            $ref: '#/components/schemas/TrackingEvent'
+    MultipleTrackingRequest:
+      type: object
+      description: Request body for multiple package tracking.
+      required:
+        - trackingNumbers
+      properties:
+        trackingNumbers:
+          type: array
+          description: List of USPS tracking numbers to look up (max 10).
+          items:
+            type: string
+          example:
+            - '9400111899223397910390'
+            - '9400111899223397910407'
+    MultipleTrackingResult:
+      type: object
+      description: Tracking results for multiple packages.
+      properties:
+        trackingResults:
+          type: array
+          description: List of tracking results per tracking number.
+          items:
+            type: object
+            properties:
+              trackingNumber:
+                type: string
+                description: The tracking number.
+                example: '9400111899223397910390'
+              status:
+                type: string
+                description: Current delivery status.
+                example: 'DELIVERED'
+              deliveryDate:
+                type: string
+                format: date
+                description: Actual or estimated delivery date.
+                example: '2025-03-14'
+    Error:
+      type: object
+      description: API error response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version.
+          example: '3.2'
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: Error code.
+              example: 'TRACK_ERR_001'
+            message:
+              type: string
+              description: Error message.
+              example: 'Tracking number not found'
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: '404'
+                  title:
+                    type: string
+                    example: 'Not Found'
+                  detail:
+                    type: string
+                    example: 'The tracking number provided was not found in the system.'

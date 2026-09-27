@@ -7,15 +7,19 @@ description: >-
   all functionality migrated to the new OAuth 2.0-secured API platform.
 deliveryModel:
   model: saas
-  open_source: false
+  license_evidence:
+    not_product:
+    - usps/api-examples
+  open_source: unknown
   commercial: true
   callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: high
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -174,16 +178,16 @@ apis:
   - type: Authentication
     url: https://developers.usps.com/getting-started
   aid: usps:oauth2
-- aid: usps:addresses
+- aid: usps:usps-addresses-api
   name: United States Postal Service Addresses API
   description: Address validation and standardization operations
-  humanURL: https://developers.usps.com/addressesv3
+  humanURL: https://developers.usps.com/internationalpricesv3
   baseURL: https://apis.usps.com
   tags:
   - Addresses
   properties:
   - type: OpenAPI
-    url: openapi/united-states-postal-service-addresses-api-openapi.yml
+    url: openapi/usps-addresses-api-openapi.yml
   - type: Documentation
     url: https://developers.usps.com/addressesv3
   - type: JSONSchema
@@ -229,13 +233,13 @@ apis:
 - aid: usps:usps-carrier-pickup-api
   name: United States Postal Service Carrier Pickup API
   description: Schedule and manage USPS carrier pickup requests
-  humanURL: https://developers.usps.com/addressesv3
+  humanURL: https://developers.usps.com/internationalpricesv3
   baseURL: https://apis.usps.com
   tags:
   - Carrier Pickup
   properties:
   - type: OpenAPI
-    url: openapi/united-states-postal-service-carrier-pickup-api-openapi.yml
+    url: openapi/usps-carrier-pickup-api-openapi.yml
   - type: Documentation
     url: https://developers.usps.com/addressesv3
   - type: JSONSchema
@@ -278,16 +282,16 @@ apis:
     url: json-ld/united-states-postal-service-carrier-context.jsonld
   - type: Examples
     url: examples/carrier-pickup-pickup-request-example.json
-- aid: usps:prices
+- aid: usps:usps-domestic-prices-api
   name: United States Postal Service Domestic Prices API
   description: Domestic postage pricing and rate calculation operations
-  humanURL: https://developers.usps.com/addressesv3
+  humanURL: https://developers.usps.com/internationalpricesv3
   baseURL: https://apis.usps.com
   tags:
   - Domestic Prices
   properties:
   - type: OpenAPI
-    url: openapi/united-states-postal-service-domestic-prices-api-openapi.yml
+    url: openapi/usps-domestic-prices-api-openapi.yml
   - type: Documentation
     url: https://developers.usps.com/addressesv3
   - type: JSONSchema
@@ -330,16 +334,16 @@ apis:
     url: json-ld/united-states-postal-service-carrier-context.jsonld
   - type: Examples
     url: examples/carrier-pickup-pickup-request-example.json
-- aid: usps:tracking
+- aid: usps:usps-tracking-api
   name: United States Postal Service Tracking API
   description: Package tracking status and event operations
-  humanURL: https://developers.usps.com/addressesv3
+  humanURL: https://developers.usps.com/internationalpricesv3
   baseURL: https://apis.usps.com
   tags:
   - Tracking
   properties:
   - type: OpenAPI
-    url: openapi/united-states-postal-service-tracking-api-openapi.yml
+    url: openapi/usps-tracking-api-openapi.yml
   - type: Documentation
     url: https://developers.usps.com/addressesv3
   - type: JSONSchema

@@ -1,0 +1,407 @@
+openapi: 3.1.0
+info:
+  title: USPS Addresses API
+  description: >-
+    The USPS Addresses API validates and corrects address information, eliminating
+    errors, improving package delivery service and package pricing. Supports address
+    standardization, city and state lookup, and ZIP Code validation.
+  version: '3.0'
+  contact:
+    name: USPS API Support
+    url: https://developers.usps.com/
+    email: https://emailus.usps.com/s/web-tools-inquiry
+  x-generated-from: documentation
+externalDocs:
+  description: USPS Addresses API Documentation
+  url: https://developers.usps.com/addressesv3
+servers:
+  - url: https://apis.usps.com
+    description: Production
+  - url: https://apis-tem.usps.com
+    description: Testing Environment for Mailers (TEM)
+tags:
+  - name: Addresses
+    description: Address validation and standardization operations
+security:
+  - bearerAuth: []
+paths:
+  /addresses/v3/address:
+    get:
+      operationId: validateAddress
+      summary: USPS Addresses Validate Address
+      description: >-
+        Validates and standardizes a US address to USPS specifications. Returns
+        the corrected address with ZIP+4, delivery point, and associated metadata.
+      tags:
+        - Addresses
+      parameters:
+        - name: streetAddress
+          in: query
+          required: true
+          description: Primary street address line.
+          schema:
+            type: string
+          example: '2 Massachusetts Ave NE'
+        - name: secondaryAddress
+          in: query
+          required: false
+          description: Secondary address line (apartment, suite, unit, etc.).
+          schema:
+            type: string
+          example: 'Suite 100'
+        - name: city
+          in: query
+          required: false
+          description: City name.
+          schema:
+            type: string
+          example: 'Washington'
+        - name: state
+          in: query
+          required: false
+          description: Two-letter state abbreviation.
+          schema:
+            type: string
+            maxLength: 2
+          example: 'DC'
+        - name: ZIPCode
+          in: query
+          required: false
+          description: 5-digit ZIP Code.
+          schema:
+            type: string
+            pattern: '^\d{5}$'
+          example: '20212'
+        - name: ZIPPlus4
+          in: query
+          required: false
+          description: ZIP+4 Code (4-digit extension).
+          schema:
+            type: string
+            pattern: '^\d{4}$'
+          example: '0001'
+      responses:
+        '200':
+          description: Address successfully validated and standardized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+              examples:
+                ValidateAddress200Example:
+                  summary: Default validateAddress 200 response
+                  x-microcks-default: true
+                  value:
+                    firm: ''
+                    streetAddress: '2 MASSACHUSETTS AVE NE'
+                    streetAddressAbbreviation: ''
+                    secondaryAddress: ''
+                    city: 'WASHINGTON'
+                    cityAbbreviation: ''
+                    state: 'DC'
+                    postalCode: ''
+                    province: ''
+                    ZIPCode: '20212'
+                    ZIPPlus4: '0001'
+                    urbanization: ''
+                    classificationCode: 'D'
+                    DPVConfirmation: 'Y'
+                    DPVCMRA: 'N'
+                    DPVFootnotes: 'AABB'
+        '400':
+          description: Bad request - invalid address parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - invalid or missing bearer token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too many requests - rate limit exceeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /addresses/v3/city-state:
+    get:
+      operationId: getCityState
+      summary: USPS Addresses Get City and State by ZIP
+      description: >-
+        Returns the city and state associated with a given 5-digit ZIP Code.
+      tags:
+        - Addresses
+      parameters:
+        - name: ZIPCode
+          in: query
+          required: true
+          description: 5-digit ZIP Code to look up.
+          schema:
+            type: string
+            pattern: '^\d{5}$'
+          example: '20212'
+      responses:
+        '200':
+          description: City and state returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityState'
+              examples:
+                GetCityState200Example:
+                  summary: Default getCityState 200 response
+                  x-microcks-default: true
+                  value:
+                    city: 'WASHINGTON'
+                    state: 'DC'
+                    ZIPCode: '20212'
+        '400':
+          description: Bad request - invalid ZIP Code.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /addresses/v3/zipcode:
+    get:
+      operationId: getZIPCode
+      summary: USPS Addresses Get ZIP Code
+      description: >-
+        Returns the ZIP Code and ZIP+4 associated with an address. Useful for
+        address completion and postage calculation.
+      tags:
+        - Addresses
+      parameters:
+        - name: streetAddress
+          in: query
+          required: true
+          description: Primary street address line.
+          schema:
+            type: string
+          example: '2 Massachusetts Ave NE'
+        - name: secondaryAddress
+          in: query
+          required: false
+          description: Secondary address line.
+          schema:
+            type: string
+        - name: city
+          in: query
+          required: true
+          description: City name.
+          schema:
+            type: string
+          example: 'Washington'
+        - name: state
+          in: query
+          required: true
+          description: Two-letter state abbreviation.
+          schema:
+            type: string
+            maxLength: 2
+          example: 'DC'
+      responses:
+        '200':
+          description: ZIP Code returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ZIPCodeResult'
+              examples:
+                GetZIPCode200Example:
+                  summary: Default getZIPCode 200 response
+                  x-microcks-default: true
+                  value:
+                    streetAddress: '2 MASSACHUSETTS AVE NE'
+                    city: 'WASHINGTON'
+                    state: 'DC'
+                    ZIPCode: '20212'
+                    ZIPPlus4: '0001'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer Token obtained from the USPS OAuth API.
+  schemas:
+    Address:
+      type: object
+      description: USPS standardized address response.
+      properties:
+        firm:
+          type: string
+          description: Company or organization name.
+          example: ''
+        streetAddress:
+          type: string
+          description: Standardized primary street address.
+          example: '2 MASSACHUSETTS AVE NE'
+        streetAddressAbbreviation:
+          type: string
+          description: Abbreviated street address.
+          example: ''
+        secondaryAddress:
+          type: string
+          description: Standardized secondary address.
+          example: ''
+        city:
+          type: string
+          description: City name.
+          example: 'WASHINGTON'
+        cityAbbreviation:
+          type: string
+          description: City abbreviation if applicable.
+          example: ''
+        state:
+          type: string
+          description: Two-letter state code.
+          example: 'DC'
+        postalCode:
+          type: string
+          description: Postal code for territories.
+          example: ''
+        province:
+          type: string
+          description: Province for international addresses.
+          example: ''
+        ZIPCode:
+          type: string
+          description: 5-digit ZIP Code.
+          example: '20212'
+        ZIPPlus4:
+          type: string
+          description: ZIP+4 extension code.
+          example: '0001'
+        urbanization:
+          type: string
+          description: Puerto Rico urbanization name if applicable.
+          example: ''
+        classificationCode:
+          type: string
+          description: Address classification code (D=Default, S=Seasonal).
+          example: 'D'
+        DPVConfirmation:
+          type: string
+          description: Delivery Point Validation confirmation (Y/S/D/N).
+          example: 'Y'
+        DPVCMRA:
+          type: string
+          description: Commercial Mail Receiving Agency indicator.
+          example: 'N'
+        DPVFootnotes:
+          type: string
+          description: DPV footnote codes.
+          example: 'AABB'
+    CityState:
+      type: object
+      description: City and state lookup result.
+      properties:
+        city:
+          type: string
+          description: City name.
+          example: 'WASHINGTON'
+        state:
+          type: string
+          description: Two-letter state abbreviation.
+          example: 'DC'
+        ZIPCode:
+          type: string
+          description: The queried ZIP Code.
+          example: '20212'
+    ZIPCodeResult:
+      type: object
+      description: ZIP Code lookup result.
+      properties:
+        streetAddress:
+          type: string
+          description: Standardized street address.
+          example: '2 MASSACHUSETTS AVE NE'
+        city:
+          type: string
+          description: City name.
+          example: 'WASHINGTON'
+        state:
+          type: string
+          description: Two-letter state abbreviation.
+          example: 'DC'
+        ZIPCode:
+          type: string
+          description: 5-digit ZIP Code.
+          example: '20212'
+        ZIPPlus4:
+          type: string
+          description: ZIP+4 Code.
+          example: '0001'
+    Error:
+      type: object
+      description: API error response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version that returned the error.
+          example: '3.0'
+        error:
+          type: object
+          description: Error details.
+          properties:
+            code:
+              type: string
+              description: Error code.
+              example: 'ADDR_ERR_001'
+            message:
+              type: string
+              description: Human-readable error message.
+              example: 'Address not found'
+            errors:
+              type: array
+              description: List of field-level validation errors.
+              items:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: HTTP status code as string.
+                    example: '400'
+                  title:
+                    type: string
+                    description: Error title.
+                    example: 'Invalid ZIP Code'
+                  detail:
+                    type: string
+                    description: Error detail message.
+                    example: 'The ZIP Code provided is not valid.'

@@ -1,0 +1,383 @@
+openapi: 3.1.0
+info:
+  title: USPS Carrier Pickup API
+  description: >-
+    The USPS Carrier Pickup API enables free carrier pickup scheduling for next-day
+    service, Monday through Saturday, excluding holidays. Supports creating, retrieving,
+    updating, and canceling pickup requests.
+  version: '3.0'
+  contact:
+    name: USPS API Support
+    url: https://developers.usps.com/
+  x-generated-from: documentation
+externalDocs:
+  description: USPS Carrier Pickup API Documentation
+  url: https://developers.usps.com/carrierpickupv3
+servers:
+  - url: https://apis.usps.com
+    description: Production
+  - url: https://apis-tem.usps.com
+    description: Testing Environment for Mailers (TEM)
+tags:
+  - name: Carrier Pickup
+    description: Schedule and manage USPS carrier pickup requests
+security:
+  - bearerAuth: []
+paths:
+  /pickup/v3/carrier-pickup:
+    post:
+      operationId: scheduleCarrierPickup
+      summary: USPS Carrier Pickup Schedule Carrier Pickup
+      description: >-
+        Schedules a free USPS carrier pickup at a specified address for the next
+        available pickup date. Pickup is available Monday-Saturday, excluding
+        federal holidays.
+      tags:
+        - Carrier Pickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PickupRequest'
+            examples:
+              ScheduleCarrierPickupRequestExample:
+                summary: Default scheduleCarrierPickup request
+                x-microcks-default: true
+                value:
+                  firstName: 'John'
+                  lastName: 'Doe'
+                  pickupAddress:
+                    streetAddress: '2 Massachusetts Ave NE'
+                    city: 'Washington'
+                    state: 'DC'
+                    ZIPCode: '20212'
+                  packages:
+                    - serviceType: 'APO/FPO/DPO'
+                      count: 1
+                  packageLocation: 'FRONT_DOOR'
+                  specialInstructions: 'Leave by the blue mailbox'
+      responses:
+        '200':
+          description: Pickup scheduled successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PickupResponse'
+              examples:
+                ScheduleCarrierPickup200Example:
+                  summary: Default scheduleCarrierPickup 200 response
+                  x-microcks-default: true
+                  value:
+                    confirmationNumber: 'WTC123456789'
+                    dayOfWeek: 'Monday'
+                    pickupDate: '2025-03-17'
+                    address:
+                      streetAddress: '2 MASSACHUSETTS AVE NE'
+                      city: 'WASHINGTON'
+                      state: 'DC'
+                      ZIPCode: '20212'
+        '400':
+          description: Bad request - invalid pickup parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: getCarrierPickup
+      summary: USPS Carrier Pickup Get Carrier Pickup
+      description: >-
+        Retrieves an existing carrier pickup request by confirmation number.
+      tags:
+        - Carrier Pickup
+      parameters:
+        - name: confirmationNumber
+          in: query
+          required: true
+          description: The confirmation number for the pickup request.
+          schema:
+            type: string
+          example: 'WTC123456789'
+      responses:
+        '200':
+          description: Pickup information retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PickupResponse'
+              examples:
+                GetCarrierPickup200Example:
+                  summary: Default getCarrierPickup 200 response
+                  x-microcks-default: true
+                  value:
+                    confirmationNumber: 'WTC123456789'
+                    dayOfWeek: 'Monday'
+                    pickupDate: '2025-03-17'
+                    address:
+                      streetAddress: '2 MASSACHUSETTS AVE NE'
+                      city: 'WASHINGTON'
+                      state: 'DC'
+                      ZIPCode: '20212'
+        '404':
+          description: Pickup confirmation not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateCarrierPickup
+      summary: USPS Carrier Pickup Update Carrier Pickup
+      description: >-
+        Updates an existing carrier pickup request. Can modify package count,
+        location, and special instructions.
+      tags:
+        - Carrier Pickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PickupUpdateRequest'
+            examples:
+              UpdateCarrierPickupRequestExample:
+                summary: Default updateCarrierPickup request
+                x-microcks-default: true
+                value:
+                  confirmationNumber: 'WTC123456789'
+                  packages:
+                    - serviceType: 'APO/FPO/DPO'
+                      count: 2
+                  packageLocation: 'BACK_DOOR'
+      responses:
+        '200':
+          description: Pickup updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PickupResponse'
+              examples:
+                UpdateCarrierPickup200Example:
+                  summary: Default updateCarrierPickup 200 response
+                  x-microcks-default: true
+                  value:
+                    confirmationNumber: 'WTC123456789'
+                    dayOfWeek: 'Monday'
+                    pickupDate: '2025-03-17'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: cancelCarrierPickup
+      summary: USPS Carrier Pickup Cancel Carrier Pickup
+      description: >-
+        Cancels a previously scheduled carrier pickup request.
+      tags:
+        - Carrier Pickup
+      parameters:
+        - name: confirmationNumber
+          in: query
+          required: true
+          description: The confirmation number for the pickup to cancel.
+          schema:
+            type: string
+          example: 'WTC123456789'
+      responses:
+        '204':
+          description: Pickup canceled successfully.
+        '404':
+          description: Pickup confirmation not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 Bearer Token.
+  schemas:
+    PickupAddress:
+      type: object
+      description: Address for carrier pickup.
+      required:
+        - streetAddress
+        - city
+        - state
+        - ZIPCode
+      properties:
+        streetAddress:
+          type: string
+          description: Primary street address.
+          example: '2 Massachusetts Ave NE'
+        secondaryAddress:
+          type: string
+          description: Apartment, suite, or unit number.
+          example: 'Suite 100'
+        city:
+          type: string
+          description: City name.
+          example: 'Washington'
+        state:
+          type: string
+          description: Two-letter state abbreviation.
+          example: 'DC'
+        ZIPCode:
+          type: string
+          description: 5-digit ZIP Code.
+          example: '20212'
+    PickupPackage:
+      type: object
+      description: Package information for pickup.
+      properties:
+        serviceType:
+          type: string
+          description: USPS service type for the package.
+          enum:
+            - 'APO/FPO/DPO'
+            - 'PRIORITY_MAIL_EXPRESS'
+            - 'PRIORITY_MAIL'
+            - 'FIRST_CLASS_PACKAGE_SERVICE'
+            - 'PARCEL_SELECT'
+            - 'RETURNS'
+          example: 'PRIORITY_MAIL'
+        count:
+          type: integer
+          description: Number of packages of this service type.
+          example: 1
+    PickupRequest:
+      type: object
+      description: Request to schedule a carrier pickup.
+      required:
+        - pickupAddress
+        - packages
+      properties:
+        firstName:
+          type: string
+          description: First name of the contact person.
+          example: 'John'
+        lastName:
+          type: string
+          description: Last name of the contact person.
+          example: 'Doe'
+        pickupAddress:
+          $ref: '#/components/schemas/PickupAddress'
+        packages:
+          type: array
+          description: List of package types and counts to pick up.
+          items:
+            $ref: '#/components/schemas/PickupPackage'
+        packageLocation:
+          type: string
+          description: Location where packages will be left for pickup.
+          enum:
+            - FRONT_DOOR
+            - BACK_DOOR
+            - SIDE_DOOR
+            - KNOCK_ON_DOOR
+            - MAIL_ROOM
+            - OFFICE
+            - RECEPTION
+            - IN_MAILBOX
+            - OTHER
+          example: 'FRONT_DOOR'
+        specialInstructions:
+          type: string
+          description: Special pickup instructions for the carrier.
+          example: 'Leave by the blue mailbox'
+    PickupUpdateRequest:
+      type: object
+      description: Request to update an existing carrier pickup.
+      required:
+        - confirmationNumber
+      properties:
+        confirmationNumber:
+          type: string
+          description: Confirmation number of the pickup to update.
+          example: 'WTC123456789'
+        packages:
+          type: array
+          description: Updated package list.
+          items:
+            $ref: '#/components/schemas/PickupPackage'
+        packageLocation:
+          type: string
+          description: Updated package location.
+          example: 'BACK_DOOR'
+        specialInstructions:
+          type: string
+          description: Updated special instructions.
+    PickupResponse:
+      type: object
+      description: Carrier pickup confirmation response.
+      properties:
+        confirmationNumber:
+          type: string
+          description: Unique confirmation number for the pickup.
+          example: 'WTC123456789'
+        dayOfWeek:
+          type: string
+          description: Day of the week for the scheduled pickup.
+          example: 'Monday'
+        pickupDate:
+          type: string
+          format: date
+          description: Date of the scheduled pickup.
+          example: '2025-03-17'
+        address:
+          $ref: '#/components/schemas/PickupAddress'
+    Error:
+      type: object
+      description: API error response.
+      properties:
+        apiVersion:
+          type: string
+          example: '3.0'
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: 'PICKUP_ERR_001'
+            message:
+              type: string
+              example: 'Invalid pickup address'
