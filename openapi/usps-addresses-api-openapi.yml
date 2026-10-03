@@ -1,13 +1,13 @@
 openapi: 3.2.0
 info:
-  title: Usps Addresses API
+  title: USPS Addresses API
+  description: The USPS Addresses API validates and corrects address information, eliminating errors, improving package delivery service and package pricing. Supports address standardization, city and state lookup, and ZIP Code validation.
   version: '3.0'
   contact:
     name: USPS API Support
     url: https://developers.usps.com/
     email: https://emailus.usps.com/s/web-tools-inquiry
   x-generated-from: documentation
-  description: 'Operations tagged Addresses across 2 of this provider''s published API definitions: united-states-postal-service-addresses-openapi.yml, united-states-postal-service-addresses-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://apis.usps.com
   description: Production
@@ -127,11 +127,6 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
-    servers:
-    - url: https://apis.usps.com
-      description: Production
-    - url: https://apis-tem.usps.com
-      description: Testing Environment for Mailers (TEM)
   /addresses/v3/city-state:
     get:
       operationId: getCityState
@@ -178,11 +173,6 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
-    servers:
-    - url: https://apis.usps.com
-      description: Production
-    - url: https://apis-tem.usps.com
-      description: Testing Environment for Mailers (TEM)
   /addresses/v3/zipcode:
     get:
       operationId: getZIPCode
@@ -251,53 +241,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
-    servers:
-    - url: https://apis.usps.com
-      description: Production
-    - url: https://apis-tem.usps.com
-      description: Testing Environment for Mailers (TEM)
 components:
   schemas:
-    CityState:
-      type: object
-      description: City and state lookup result.
-      properties:
-        city:
-          type: string
-          description: City name.
-          example: WASHINGTON
-        state:
-          type: string
-          description: Two-letter state abbreviation.
-          example: DC
-        ZIPCode:
-          type: string
-          description: The queried ZIP Code.
-          example: '20212'
-    ZIPCodeResult:
-      type: object
-      description: ZIP Code lookup result.
-      properties:
-        streetAddress:
-          type: string
-          description: Standardized street address.
-          example: 2 MASSACHUSETTS AVE NE
-        city:
-          type: string
-          description: City name.
-          example: WASHINGTON
-        state:
-          type: string
-          description: Two-letter state abbreviation.
-          example: DC
-        ZIPCode:
-          type: string
-          description: 5-digit ZIP Code.
-          example: '20212'
-        ZIPPlus4:
-          type: string
-          description: ZIP+4 Code.
-          example: '0001'
     Address:
       type: object
       description: USPS standardized address response.
@@ -366,6 +311,46 @@ components:
           type: string
           description: DPV footnote codes.
           example: AABB
+    ZIPCodeResult:
+      type: object
+      description: ZIP Code lookup result.
+      properties:
+        streetAddress:
+          type: string
+          description: Standardized street address.
+          example: 2 MASSACHUSETTS AVE NE
+        city:
+          type: string
+          description: City name.
+          example: WASHINGTON
+        state:
+          type: string
+          description: Two-letter state abbreviation.
+          example: DC
+        ZIPCode:
+          type: string
+          description: 5-digit ZIP Code.
+          example: '20212'
+        ZIPPlus4:
+          type: string
+          description: ZIP+4 Code.
+          example: '0001'
+    CityState:
+      type: object
+      description: City and state lookup result.
+      properties:
+        city:
+          type: string
+          description: City name.
+          example: WASHINGTON
+        state:
+          type: string
+          description: Two-letter state abbreviation.
+          example: DC
+        ZIPCode:
+          type: string
+          description: The queried ZIP Code.
+          example: '20212'
     Error:
       type: object
       description: API error response.
@@ -412,6 +397,3 @@ components:
 externalDocs:
   description: USPS Addresses API Documentation
   url: https://developers.usps.com/addressesv3
-x-refined-from:
-- united-states-postal-service-addresses-openapi.yml
-- united-states-postal-service-addresses-api-openapi.yml

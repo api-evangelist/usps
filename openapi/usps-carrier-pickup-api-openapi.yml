@@ -1,12 +1,12 @@
 openapi: 3.2.0
 info:
-  title: Usps Carrier Pickup API
+  title: USPS Carrier Pickup API
+  description: The USPS Carrier Pickup API enables free carrier pickup scheduling for next-day service, Monday through Saturday, excluding holidays. Supports creating, retrieving, updating, and canceling pickup requests.
   version: '3.0'
   contact:
     name: USPS API Support
     url: https://developers.usps.com/
   x-generated-from: documentation
-  description: 'Operations tagged Carrier Pickup across 2 of this provider''s published API definitions: united-states-postal-service-carrier-pickup-openapi.yml, united-states-postal-service-carrier-pickup-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://apis.usps.com
   description: Production
@@ -216,13 +216,27 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
-    servers:
-    - url: https://apis.usps.com
-      description: Production
-    - url: https://apis-tem.usps.com
-      description: Testing Environment for Mailers (TEM)
 components:
   schemas:
+    PickupPackage:
+      type: object
+      description: Package information for pickup.
+      properties:
+        serviceType:
+          type: string
+          description: USPS service type for the package.
+          enum:
+          - APO/FPO/DPO
+          - PRIORITY_MAIL_EXPRESS
+          - PRIORITY_MAIL
+          - FIRST_CLASS_PACKAGE_SERVICE
+          - PARCEL_SELECT
+          - RETURNS
+          example: PRIORITY_MAIL
+        count:
+          type: integer
+          description: Number of packages of this service type.
+          example: 1
     PickupResponse:
       type: object
       description: Carrier pickup confirmation response.
@@ -258,35 +272,6 @@ components:
             message:
               type: string
               example: Invalid pickup address
-    PickupAddress:
-      type: object
-      description: Address for carrier pickup.
-      required:
-      - streetAddress
-      - city
-      - state
-      - ZIPCode
-      properties:
-        streetAddress:
-          type: string
-          description: Primary street address.
-          example: 2 Massachusetts Ave NE
-        secondaryAddress:
-          type: string
-          description: Apartment, suite, or unit number.
-          example: Suite 100
-        city:
-          type: string
-          description: City name.
-          example: Washington
-        state:
-          type: string
-          description: Two-letter state abbreviation.
-          example: DC
-        ZIPCode:
-          type: string
-          description: 5-digit ZIP Code.
-          example: '20212'
     PickupRequest:
       type: object
       description: Request to schedule a carrier pickup.
@@ -327,6 +312,35 @@ components:
           type: string
           description: Special pickup instructions for the carrier.
           example: Leave by the blue mailbox
+    PickupAddress:
+      type: object
+      description: Address for carrier pickup.
+      required:
+      - streetAddress
+      - city
+      - state
+      - ZIPCode
+      properties:
+        streetAddress:
+          type: string
+          description: Primary street address.
+          example: 2 Massachusetts Ave NE
+        secondaryAddress:
+          type: string
+          description: Apartment, suite, or unit number.
+          example: Suite 100
+        city:
+          type: string
+          description: City name.
+          example: Washington
+        state:
+          type: string
+          description: Two-letter state abbreviation.
+          example: DC
+        ZIPCode:
+          type: string
+          description: 5-digit ZIP Code.
+          example: '20212'
     PickupUpdateRequest:
       type: object
       description: Request to update an existing carrier pickup.
@@ -349,25 +363,6 @@ components:
         specialInstructions:
           type: string
           description: Updated special instructions.
-    PickupPackage:
-      type: object
-      description: Package information for pickup.
-      properties:
-        serviceType:
-          type: string
-          description: USPS service type for the package.
-          enum:
-          - APO/FPO/DPO
-          - PRIORITY_MAIL_EXPRESS
-          - PRIORITY_MAIL
-          - FIRST_CLASS_PACKAGE_SERVICE
-          - PARCEL_SELECT
-          - RETURNS
-          example: PRIORITY_MAIL
-        count:
-          type: integer
-          description: Number of packages of this service type.
-          example: 1
   securitySchemes:
     bearerAuth:
       type: http
@@ -376,6 +371,3 @@ components:
 externalDocs:
   description: USPS Carrier Pickup API Documentation
   url: https://developers.usps.com/carrierpickupv3
-x-refined-from:
-- united-states-postal-service-carrier-pickup-openapi.yml
-- united-states-postal-service-carrier-pickup-api-openapi.yml

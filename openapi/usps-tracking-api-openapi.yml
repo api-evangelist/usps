@@ -1,12 +1,12 @@
 openapi: 3.2.0
 info:
-  title: Usps Tracking API
+  title: USPS Tracking API
+  description: The USPS Tracking API returns tracking status and related details for a given USPS package, including scan events with date, time, and location. Supports single and multiple package tracking requests.
   version: '3.2'
   contact:
     name: USPS API Support
     url: https://developers.usps.com/
   x-generated-from: documentation
-  description: 'Operations tagged Tracking across 2 of this provider''s published API definitions: united-states-postal-service-tracking-openapi.yml, united-states-postal-service-tracking-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://apis.usps.com
   description: Production
@@ -108,11 +108,6 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
-    servers:
-    - url: https://apis.usps.com
-      description: Production
-    - url: https://apis-tem.usps.com
-      description: Testing Environment for Mailers (TEM)
   /tracking/v3/tracking:
     post:
       operationId: getMultipleTracking
@@ -168,13 +163,34 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
-    servers:
-    - url: https://apis.usps.com
-      description: Production
-    - url: https://apis-tem.usps.com
-      description: Testing Environment for Mailers (TEM)
 components:
   schemas:
+    TrackingResult:
+      type: object
+      description: Tracking result for a single package.
+      properties:
+        TrackSummary:
+          $ref: '#/components/schemas/TrackingEvent'
+          description: Most recent tracking event summary.
+        TrackDetail:
+          type: array
+          description: Full list of historical tracking events.
+          items:
+            $ref: '#/components/schemas/TrackingEvent'
+    MultipleTrackingRequest:
+      type: object
+      description: Request body for multiple package tracking.
+      required:
+      - trackingNumbers
+      properties:
+        trackingNumbers:
+          type: array
+          description: List of USPS tracking numbers to look up (max 10).
+          items:
+            type: string
+          example:
+          - '9400111899223397910390'
+          - '9400111899223397910407'
     Error:
       type: object
       description: API error response.
@@ -279,32 +295,6 @@ components:
                 format: date
                 description: Actual or estimated delivery date.
                 example: '2025-03-14'
-    TrackingResult:
-      type: object
-      description: Tracking result for a single package.
-      properties:
-        TrackSummary:
-          $ref: '#/components/schemas/TrackingEvent'
-          description: Most recent tracking event summary.
-        TrackDetail:
-          type: array
-          description: Full list of historical tracking events.
-          items:
-            $ref: '#/components/schemas/TrackingEvent'
-    MultipleTrackingRequest:
-      type: object
-      description: Request body for multiple package tracking.
-      required:
-      - trackingNumbers
-      properties:
-        trackingNumbers:
-          type: array
-          description: List of USPS tracking numbers to look up (max 10).
-          items:
-            type: string
-          example:
-          - '9400111899223397910390'
-          - '9400111899223397910407'
   securitySchemes:
     bearerAuth:
       type: http
@@ -313,6 +303,3 @@ components:
 externalDocs:
   description: USPS Tracking API Documentation
   url: https://developers.usps.com/trackingv3r2
-x-refined-from:
-- united-states-postal-service-tracking-openapi.yml
-- united-states-postal-service-tracking-api-openapi.yml
