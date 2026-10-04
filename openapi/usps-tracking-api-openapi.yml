@@ -165,18 +165,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    TrackingResult:
-      type: object
-      description: Tracking result for a single package.
-      properties:
-        TrackSummary:
-          $ref: '#/components/schemas/TrackingEvent'
-          description: Most recent tracking event summary.
-        TrackDetail:
-          type: array
-          description: Full list of historical tracking events.
-          items:
-            $ref: '#/components/schemas/TrackingEvent'
     MultipleTrackingRequest:
       type: object
       description: Request body for multiple package tracking.
@@ -191,6 +179,41 @@ components:
           example:
           - '9400111899223397910390'
           - '9400111899223397910407'
+    MultipleTrackingResult:
+      type: object
+      description: Tracking results for multiple packages.
+      properties:
+        trackingResults:
+          type: array
+          description: List of tracking results per tracking number.
+          items:
+            type: object
+            properties:
+              trackingNumber:
+                type: string
+                description: The tracking number.
+                example: '9400111899223397910390'
+              status:
+                type: string
+                description: Current delivery status.
+                example: DELIVERED
+              deliveryDate:
+                type: string
+                format: date
+                description: Actual or estimated delivery date.
+                example: '2025-03-14'
+    TrackingResult:
+      type: object
+      description: Tracking result for a single package.
+      properties:
+        TrackSummary:
+          $ref: '#/components/schemas/TrackingEvent'
+          description: Most recent tracking event summary.
+        TrackDetail:
+          type: array
+          description: Full list of historical tracking events.
+          items:
+            $ref: '#/components/schemas/TrackingEvent'
     Error:
       type: object
       description: API error response.
@@ -272,29 +295,6 @@ components:
           type: string
           description: Code indicating delivery type or condition.
           example: '01'
-    MultipleTrackingResult:
-      type: object
-      description: Tracking results for multiple packages.
-      properties:
-        trackingResults:
-          type: array
-          description: List of tracking results per tracking number.
-          items:
-            type: object
-            properties:
-              trackingNumber:
-                type: string
-                description: The tracking number.
-                example: '9400111899223397910390'
-              status:
-                type: string
-                description: Current delivery status.
-                example: DELIVERED
-              deliveryDate:
-                type: string
-                format: date
-                description: Actual or estimated delivery date.
-                example: '2025-03-14'
   securitySchemes:
     bearerAuth:
       type: http
