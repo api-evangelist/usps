@@ -387,6 +387,12 @@ apis:
   - type: Examples
     url: examples/carrier-pickup-pickup-request-example.json
 common:
+  - type: Plans
+    url: plans/united-states-postal-service-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/united-states-postal-service-rate-limits.yml
+  - type: FinOps
+    url: finops/united-states-postal-service-finops.yml
   - type: Website
     url: https://www.usps.com/
   - type: AgenticAccess
