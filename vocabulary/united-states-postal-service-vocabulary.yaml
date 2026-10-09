@@ -1,0 +1,319 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "United States Postal Service"
+  description: "Unified taxonomy mapping USPS API operational and capability dimensions for shipping, tracking, and address validation."
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+operational:
+  apis:
+    - namespace: usps-addresses
+      version: "3.0"
+      baseUrl: https://apis.usps.com/addresses/v3
+      status: active
+    - namespace: usps-tracking
+      version: "3.2"
+      baseUrl: https://apis.usps.com/tracking/v3
+      status: active
+    - namespace: usps-domestic-prices
+      version: "3.0"
+      baseUrl: https://apis.usps.com/prices/v3
+      status: active
+    - namespace: usps-carrier-pickup
+      version: "3.0"
+      baseUrl: https://apis.usps.com/pickup/v3
+      status: active
+
+  resources:
+    - name: addresses
+      apis:
+        - usps-addresses
+      actions:
+        - validate
+        - lookup
+    - name: tracking
+      apis:
+        - usps-tracking
+      actions:
+        - get
+        - bulk-get
+    - name: rates
+      apis:
+        - usps-domestic-prices
+      actions:
+        - search
+    - name: pickups
+      apis:
+        - usps-carrier-pickup
+      actions:
+        - schedule
+        - get
+        - update
+        - cancel
+
+  actions:
+    - name: validate
+      httpMethod: GET
+      pattern: read
+    - name: lookup
+      httpMethod: GET
+      pattern: read
+    - name: get
+      httpMethod: GET
+      pattern: read
+    - name: bulk-get
+      httpMethod: POST
+      pattern: query
+    - name: search
+      httpMethod: POST
+      pattern: query
+    - name: schedule
+      httpMethod: POST
+      pattern: write
+    - name: update
+      httpMethod: PUT
+      pattern: write
+    - name: cancel
+      httpMethod: DELETE
+      pattern: destructive
+
+  schemas:
+    core:
+      - name: Address
+        api: usps-addresses
+        keyProperties:
+          - streetAddress
+          - city
+          - state
+          - ZIPCode
+          - ZIPPlus4
+          - DPVConfirmation
+      - name: TrackingEvent
+        api: usps-tracking
+        keyProperties:
+          - EventTime
+          - EventDate
+          - Event
+          - EventCity
+          - EventState
+    shipping:
+      - name: BaseRateRequest
+        api: usps-domestic-prices
+        keyProperties:
+          - originZIPCode
+          - destinationZIPCode
+          - weight
+          - mailClass
+      - name: PickupRequest
+        api: usps-carrier-pickup
+        keyProperties:
+          - pickupAddress
+          - packages
+          - packageLocation
+
+  parameters:
+    identifiers:
+      - name: trackingNumber
+        type: string
+        description: USPS package tracking number
+      - name: confirmationNumber
+        type: string
+        description: Carrier pickup confirmation number
+    location:
+      - name: ZIPCode
+        type: string
+        description: 5-digit USPS ZIP Code
+      - name: ZIPPlus4
+        type: string
+        description: ZIP+4 extension code
+      - name: state
+        type: string
+        description: Two-letter state abbreviation
+    shipping:
+      - name: weight
+        type: number
+        description: Package weight in pounds
+      - name: mailClass
+        type: string
+        description: USPS mail service class
+
+  enums:
+    mailClasses:
+      - PRIORITY_MAIL
+      - PRIORITY_MAIL_EXPRESS
+      - FIRST_CLASS_PACKAGE_SERVICE
+      - PARCEL_SELECT
+      - MEDIA_MAIL
+      - LIBRARY_MAIL
+    packageLocations:
+      - FRONT_DOOR
+      - BACK_DOOR
+      - SIDE_DOOR
+      - KNOCK_ON_DOOR
+      - MAIL_ROOM
+      - OFFICE
+      - IN_MAILBOX
+    dpvConfirmation:
+      - Y
+      - S
+      - D
+      - N
+
+  authentication:
+    schemes:
+      - type: bearer
+        name: bearerAuth
+        description: OAuth 2.0 Bearer Token via Client Credentials flow
+        tokenUrl: https://apis.usps.com/oauth2/v3/token
+        apisUsing:
+          - usps-addresses
+          - usps-tracking
+          - usps-domestic-prices
+          - usps-carrier-pickup
+
+capability:
+  workflows:
+    - name: ecommerce-shipping
+      file: capabilities/ecommerce-shipping.yaml
+      description: E-commerce shipping lifecycle from address validation through rate shopping to pickup scheduling
+      apisCombined:
+        - usps-addresses
+        - usps-domestic-prices
+        - usps-carrier-pickup
+      toolCount: 8
+      personas:
+        - ecommerce-developer
+        - shipping-manager
+      domains:
+        - E-Commerce
+        - Fulfillment
+    - name: package-tracking
+      file: capabilities/package-tracking.yaml
+      description: Package tracking and delivery status monitoring for customer service and logistics
+      apisCombined:
+        - usps-tracking
+        - usps-addresses
+      toolCount: 3
+      personas:
+        - customer-service-agent
+        - logistics-manager
+      domains:
+        - Tracking
+        - Customer Service
+
+  personas:
+    - id: ecommerce-developer
+      name: E-Commerce Developer
+      description: Developer integrating USPS shipping into an online store or marketplace
+      workflows:
+        - ecommerce-shipping
+    - id: shipping-manager
+      name: Shipping Manager
+      description: Operations manager overseeing fulfillment and carrier pickup scheduling
+      workflows:
+        - ecommerce-shipping
+    - id: customer-service-agent
+      name: Customer Service Agent
+      description: Agent assisting customers with package status and delivery inquiries
+      workflows:
+        - package-tracking
+    - id: logistics-manager
+      name: Logistics Manager
+      description: Manager monitoring shipment delivery performance and address quality
+      workflows:
+        - package-tracking
+
+  domains:
+    - name: E-Commerce
+      description: Online retail shipping and fulfillment operations
+      resources:
+        - addresses
+        - rates
+        - pickups
+    - name: Fulfillment
+      description: Order fulfillment and shipping label generation operations
+      resources:
+        - rates
+        - pickups
+    - name: Tracking
+      description: Package tracking and delivery status monitoring
+      resources:
+        - tracking
+    - name: Customer Service
+      description: Customer-facing delivery inquiry and address validation support
+      resources:
+        - tracking
+        - addresses
+
+  namespaces:
+    consumed:
+      - name: usps-addresses
+        type: http
+        baseUri: https://apis.usps.com
+      - name: usps-tracking
+        type: http
+        baseUri: https://apis.usps.com
+      - name: usps-domestic-prices
+        type: http
+        baseUri: https://apis.usps.com
+      - name: usps-carrier-pickup
+        type: http
+        baseUri: https://apis.usps.com
+    restExposed:
+      - name: usps-ecommerce-shipping-api
+        port: 8080
+      - name: usps-package-tracking-api
+        port: 8081
+    mcpExposed:
+      - name: usps-ecommerce-shipping-mcp
+        port: 9090
+      - name: usps-package-tracking-mcp
+        port: 9091
+
+  binds:
+    - name: USPS_BEARER_TOKEN
+      description: OAuth 2.0 Bearer Token for USPS API authentication
+      workflows:
+        - ecommerce-shipping
+        - package-tracking
+
+crossReference:
+  - resource: addresses
+    operations:
+      - validate-address
+      - get-city-state
+      - get-zip-code
+    workflows:
+      - ecommerce-shipping
+      - package-tracking
+    personas:
+      - ecommerce-developer
+      - customer-service-agent
+  - resource: tracking
+    operations:
+      - get-tracking
+      - get-multiple-tracking
+    workflows:
+      - package-tracking
+    personas:
+      - customer-service-agent
+      - logistics-manager
+  - resource: rates
+    operations:
+      - search-base-rates
+      - search-total-rates
+    workflows:
+      - ecommerce-shipping
+    personas:
+      - ecommerce-developer
+      - shipping-manager
+  - resource: pickups
+    operations:
+      - schedule-carrier-pickup
+      - get-carrier-pickup
+      - cancel-carrier-pickup
+    workflows:
+      - ecommerce-shipping
+    personas:
+      - shipping-manager

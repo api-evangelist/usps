@@ -1,0 +1,83 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "usps": "https://usps.api.usps.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "PickupAddress": "usps:PickupAddress",
+    "PickupPackage": "usps:PickupPackage",
+    "PickupRequest": "usps:PickupRequest",
+    "PickupResponse": "usps:PickupResponse",
+    "PickupUpdateRequest": "usps:PickupUpdateRequest",
+    "streetAddress": {
+      "@id": "usps:streetAddress",
+      "@type": "xsd:string"
+    },
+    "secondaryAddress": {
+      "@id": "usps:secondaryAddress",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "usps:city",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "usps:state",
+      "@type": "xsd:string"
+    },
+    "ZIPCode": {
+      "@id": "usps:ZIPCode",
+      "@type": "xsd:string"
+    },
+    "serviceType": {
+      "@id": "usps:serviceType",
+      "@type": "xsd:string"
+    },
+    "count": {
+      "@id": "usps:count",
+      "@type": "xsd:integer"
+    },
+    "firstName": {
+      "@id": "usps:firstName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "usps:lastName",
+      "@type": "xsd:string"
+    },
+    "pickupAddress": {
+      "@id": "usps:pickupAddress",
+      "@type": "xsd:string"
+    },
+    "packages": {
+      "@id": "usps:packages",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "packageLocation": {
+      "@id": "usps:packageLocation",
+      "@type": "xsd:string"
+    },
+    "specialInstructions": {
+      "@id": "usps:specialInstructions",
+      "@type": "xsd:string"
+    },
+    "confirmationNumber": {
+      "@id": "usps:confirmationNumber",
+      "@type": "xsd:string"
+    },
+    "dayOfWeek": {
+      "@id": "usps:dayOfWeek",
+      "@type": "xsd:string"
+    },
+    "pickupDate": {
+      "@id": "usps:pickupDate",
+      "@type": "xsd:date"
+    },
+    "address": {
+      "@id": "usps:address",
+      "@type": "xsd:string"
+    }
+  }
+}

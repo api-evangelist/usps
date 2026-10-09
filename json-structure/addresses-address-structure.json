@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/addresses-address-structure.json",
+  "name": "Address",
+  "description": "USPS standardized address response.",
+  "properties": {
+    "firm": {
+      "description": "Company or organization name.",
+      "example": "",
+      "type": "string"
+    },
+    "streetAddress": {
+      "description": "Standardized primary street address.",
+      "example": "2 MASSACHUSETTS AVE NE",
+      "type": "string"
+    },
+    "streetAddressAbbreviation": {
+      "description": "Abbreviated street address.",
+      "example": "",
+      "type": "string"
+    },
+    "secondaryAddress": {
+      "description": "Standardized secondary address.",
+      "example": "",
+      "type": "string"
+    },
+    "city": {
+      "description": "City name.",
+      "example": "WASHINGTON",
+      "type": "string"
+    },
+    "cityAbbreviation": {
+      "description": "City abbreviation if applicable.",
+      "example": "",
+      "type": "string"
+    },
+    "state": {
+      "description": "Two-letter state code.",
+      "example": "DC",
+      "type": "string"
+    },
+    "postalCode": {
+      "description": "Postal code for territories.",
+      "example": "",
+      "type": "string"
+    },
+    "province": {
+      "description": "Province for international addresses.",
+      "example": "",
+      "type": "string"
+    },
+    "ZIPCode": {
+      "description": "5-digit ZIP Code.",
+      "example": "20212",
+      "type": "string"
+    },
+    "ZIPPlus4": {
+      "description": "ZIP+4 extension code.",
+      "example": "0001",
+      "type": "string"
+    },
+    "urbanization": {
+      "description": "Puerto Rico urbanization name if applicable.",
+      "example": "",
+      "type": "string"
+    },
+    "classificationCode": {
+      "description": "Address classification code (D=Default, S=Seasonal).",
+      "example": "D",
+      "type": "string"
+    },
+    "DPVConfirmation": {
+      "description": "Delivery Point Validation confirmation (Y/S/D/N).",
+      "example": "Y",
+      "type": "string"
+    },
+    "DPVCMRA": {
+      "description": "Commercial Mail Receiving Agency indicator.",
+      "example": "N",
+      "type": "string"
+    },
+    "DPVFootnotes": {
+      "description": "DPV footnote codes.",
+      "example": "AABB",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,657 @@
+{
+  "item": [
+    {
+      "id": "4aae5999-5ee5-49bb-8e0e-6cc2fa8e9ad6",
+      "name": "Tracking",
+      "description": {
+        "content": "Package tracking status and event operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1e47a4bc-b831-4405-b9bb-fe784065ed83",
+          "name": "USPS Tracking Get Package Tracking Status",
+          "request": {
+            "name": "USPS Tracking Get Package Tracking Status",
+            "description": {
+              "content": "Returns the tracking status and complete scan event history for a given USPS tracking number. Includes delivery status, estimated delivery date, and location details for each scan event.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tracking",
+                "v3",
+                "tracking",
+                ":trackingNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expand",
+                  "value": "<string>",
+                  "description": "Optional expansion for additional detail fields (e.g. SUMMARY)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "trackingNumber",
+                  "description": "(Required) The USPS tracking number for the package."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6376cd8-9e91-4b71-8dd7-feb44fe89b81",
+              "name": "Tracking information returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking",
+                    ":trackingNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "SUMMARY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trackingNumber",
+                      "description": "(Required) The USPS tracking number for the package."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"TrackSummary\": {\n    \"EventTime\": \"8:00 am\",\n    \"EventDate\": \"March 14, 2025\",\n    \"Event\": \"DELIVERED\",\n    \"EventCity\": \"WASHINGTON\",\n    \"EventState\": \"DC\",\n    \"EventZIPCode\": \"20212\",\n    \"EventCountry\": \"\",\n    \"FirmName\": \"\",\n    \"Name\": \"JOHN DOE\",\n    \"AuthorizedAgent\": \"false\",\n    \"DeliveryAttributeCode\": \"01\"\n  },\n  \"TrackDetail\": [\n    {\n      \"EventTime\": \"7:00 am\",\n      \"EventDate\": \"March 14, 2025\",\n      \"Event\": \"OUT FOR DELIVERY\",\n      \"EventCity\": \"WASHINGTON\",\n      \"EventState\": \"DC\",\n      \"EventZIPCode\": \"20212\",\n      \"EventCountry\": \"\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "309bf229-eda1-4416-a881-63050c0743db",
+              "name": "Bad request - invalid tracking number format.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking",
+                    ":trackingNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "SUMMARY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trackingNumber",
+                      "description": "(Required) The USPS tracking number for the package."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.2\",\n  \"error\": {\n    \"code\": \"TRACK_ERR_001\",\n    \"message\": \"Tracking number not found\",\n    \"errors\": [\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      },\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3365b644-1236-4e66-af8e-fb6b666fc0a5",
+              "name": "Unauthorized - invalid or missing bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking",
+                    ":trackingNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "SUMMARY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trackingNumber",
+                      "description": "(Required) The USPS tracking number for the package."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.2\",\n  \"error\": {\n    \"code\": \"TRACK_ERR_001\",\n    \"message\": \"Tracking number not found\",\n    \"errors\": [\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      },\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "180f0b5f-129a-4d76-b07c-a585c5f91cba",
+              "name": "Tracking number not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking",
+                    ":trackingNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "SUMMARY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trackingNumber",
+                      "description": "(Required) The USPS tracking number for the package."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.2\",\n  \"error\": {\n    \"code\": \"TRACK_ERR_001\",\n    \"message\": \"Tracking number not found\",\n    \"errors\": [\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      },\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "deb77da2-cb99-4c05-a19d-3c751e02b6bb",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking",
+                    ":trackingNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "SUMMARY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trackingNumber",
+                      "description": "(Required) The USPS tracking number for the package."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.2\",\n  \"error\": {\n    \"code\": \"TRACK_ERR_001\",\n    \"message\": \"Tracking number not found\",\n    \"errors\": [\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      },\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6283b7c3-f41f-4878-b8b1-1bffacd96346",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking",
+                    ":trackingNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expand",
+                      "value": "SUMMARY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "trackingNumber",
+                      "description": "(Required) The USPS tracking number for the package."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.2\",\n  \"error\": {\n    \"code\": \"TRACK_ERR_001\",\n    \"message\": \"Tracking number not found\",\n    \"errors\": [\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      },\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d106a3be-bbae-47ed-8e6f-fde916ea4e0b",
+          "name": "USPS Tracking Get Multiple Package Tracking Status",
+          "request": {
+            "name": "USPS Tracking Get Multiple Package Tracking Status",
+            "description": {
+              "content": "Returns tracking status for multiple USPS packages in a single request. Accepts up to 10 tracking numbers per request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tracking",
+                "v3",
+                "tracking"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trackingNumbers\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4be8746e-11d3-49dd-bac4-e60c445288b8",
+              "name": "Tracking information returned for all requested packages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trackingNumbers\": [\n    \"9400111899223397910390\",\n    \"9400111899223397910407\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trackingResults\": [\n    {\n      \"trackingNumber\": \"9400111899223397910390\",\n      \"status\": \"DELIVERED\",\n      \"deliveryDate\": \"2025-03-14\"\n    },\n    {\n      \"trackingNumber\": \"9400111899223397910407\",\n      \"status\": \"IN_TRANSIT\",\n      \"deliveryDate\": \"2025-03-15\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9038e4e4-f854-414b-9bdd-1ac7b79c82bf",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trackingNumbers\": [\n    \"9400111899223397910390\",\n    \"9400111899223397910407\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.2\",\n  \"error\": {\n    \"code\": \"TRACK_ERR_001\",\n    \"message\": \"Tracking number not found\",\n    \"errors\": [\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      },\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d5b7ee6-a95c-4026-9a64-24a3316b86e9",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tracking",
+                    "v3",
+                    "tracking"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"trackingNumbers\": [\n    \"9400111899223397910390\",\n    \"9400111899223397910407\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.2\",\n  \"error\": {\n    \"code\": \"TRACK_ERR_001\",\n    \"message\": \"Tracking number not found\",\n    \"errors\": [\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      },\n      {\n        \"status\": \"404\",\n        \"title\": \"Not Found\",\n        \"detail\": \"The tracking number provided was not found in the system.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.usps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b3e5d9d4-6c4c-476c-be57-6329f7c615d1",
+    "name": "USPS Addresses Tracking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USPS Addresses API validates and corrects address information, eliminating errors, improving package delivery service and package pricing. Supports address standardization, city and state lookup, and ZIP Code validation.\n\nContact Support:\n Name: USPS API Support\n Email: https://emailus.usps.com/s/web-tools-inquiry",
+      "type": "text/plain"
+    }
+  }
+}

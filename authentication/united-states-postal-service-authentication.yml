@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/united-states-postal-service-addresses-openapi.yml, openapi/united-states-postal-service-carrier-pickup-openapi.yml,
+  openapi/united-states-postal-service-domestic-prices-openapi.yml, openapi/united-states-postal-service-tracking-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth 2.0 Bearer Token obtained from the USPS OAuth API.
+  sources:
+  - openapi/united-states-postal-service-addresses-openapi.yml
+  - openapi/united-states-postal-service-carrier-pickup-openapi.yml
+  - openapi/united-states-postal-service-domestic-prices-openapi.yml
+  - openapi/united-states-postal-service-tracking-openapi.yml

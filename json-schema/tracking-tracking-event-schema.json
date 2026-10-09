@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/tracking-tracking-event-schema.json",
+  "title": "TrackingEvent",
+  "description": "A single tracking scan event for a package.",
+  "type": "object",
+  "properties": {
+    "EventTime": {
+      "type": "string",
+      "description": "Time of the tracking event.",
+      "example": "8:00 am"
+    },
+    "EventDate": {
+      "type": "string",
+      "description": "Date of the tracking event.",
+      "example": "March 14, 2025"
+    },
+    "Event": {
+      "type": "string",
+      "description": "Description of the tracking event.",
+      "example": "DELIVERED"
+    },
+    "EventCity": {
+      "type": "string",
+      "description": "City where the event occurred.",
+      "example": "WASHINGTON"
+    },
+    "EventState": {
+      "type": "string",
+      "description": "State where the event occurred.",
+      "example": "DC"
+    },
+    "EventZIPCode": {
+      "type": "string",
+      "description": "ZIP Code of the event location.",
+      "example": "20212"
+    },
+    "EventCountry": {
+      "type": "string",
+      "description": "Country where the event occurred (empty for domestic).",
+      "example": ""
+    },
+    "FirmName": {
+      "type": "string",
+      "description": "Company name for business deliveries.",
+      "example": ""
+    },
+    "Name": {
+      "type": "string",
+      "description": "Recipient name if available.",
+      "example": "JOHN DOE"
+    },
+    "AuthorizedAgent": {
+      "type": "string",
+      "description": "Whether delivered to an authorized agent.",
+      "example": "false"
+    },
+    "DeliveryAttributeCode": {
+      "type": "string",
+      "description": "Code indicating delivery type or condition.",
+      "example": "01"
+    }
+  }
+}

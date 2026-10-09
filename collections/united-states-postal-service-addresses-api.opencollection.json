@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USPS Addresses API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "USPS Addresses Validate Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.usps.com/addresses/v3/address",
+            "params": [
+              {
+                "name": "streetAddress",
+                "value": "2 Massachusetts Ave NE",
+                "type": "query",
+                "description": "Primary street address line."
+              },
+              {
+                "name": "secondaryAddress",
+                "value": "Suite 100",
+                "type": "query",
+                "description": "Secondary address line (apartment, suite, unit, etc.)."
+              },
+              {
+                "name": "city",
+                "value": "Washington",
+                "type": "query",
+                "description": "City name."
+              },
+              {
+                "name": "state",
+                "value": "DC",
+                "type": "query",
+                "description": "Two-letter state abbreviation."
+              },
+              {
+                "name": "ZIPCode",
+                "value": "20212",
+                "type": "query",
+                "description": "5-digit ZIP Code."
+              },
+              {
+                "name": "ZIPPlus4",
+                "value": "0001",
+                "type": "query",
+                "description": "ZIP+4 Code (4-digit extension)."
+              }
+            ]
+          },
+          "docs": "Validates and standardizes a US address to USPS specifications. Returns the corrected address with ZIP+4, delivery point, and associated metadata."
+        },
+        {
+          "info": {
+            "name": "USPS Addresses Get City and State by ZIP",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.usps.com/addresses/v3/city-state",
+            "params": [
+              {
+                "name": "ZIPCode",
+                "value": "20212",
+                "type": "query",
+                "description": "5-digit ZIP Code to look up."
+              }
+            ]
+          },
+          "docs": "Returns the city and state associated with a given 5-digit ZIP Code."
+        },
+        {
+          "info": {
+            "name": "USPS Addresses Get ZIP Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.usps.com/addresses/v3/zipcode",
+            "params": [
+              {
+                "name": "streetAddress",
+                "value": "2 Massachusetts Ave NE",
+                "type": "query",
+                "description": "Primary street address line."
+              },
+              {
+                "name": "secondaryAddress",
+                "value": "",
+                "type": "query",
+                "description": "Secondary address line."
+              },
+              {
+                "name": "city",
+                "value": "Washington",
+                "type": "query",
+                "description": "City name."
+              },
+              {
+                "name": "state",
+                "value": "DC",
+                "type": "query",
+                "description": "Two-letter state abbreviation."
+              }
+            ]
+          },
+          "docs": "Returns the ZIP Code and ZIP+4 associated with an address. Useful for address completion and postage calculation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

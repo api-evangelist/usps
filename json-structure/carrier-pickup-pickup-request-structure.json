@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/carrier-pickup-pickup-request-structure.json",
+  "name": "PickupRequest",
+  "description": "Request to schedule a carrier pickup.",
+  "properties": {
+    "firstName": {
+      "description": "First name of the contact person.",
+      "example": "John",
+      "type": "string"
+    },
+    "lastName": {
+      "description": "Last name of the contact person.",
+      "example": "Doe",
+      "type": "string"
+    },
+    "pickupAddress": {
+      "$ref": "#/components/schemas/PickupAddress"
+    },
+    "packages": {
+      "description": "List of package types and counts to pick up.",
+      "items": {
+        "$ref": "#/components/schemas/PickupPackage"
+      },
+      "type": "array"
+    },
+    "packageLocation": {
+      "description": "Location where packages will be left for pickup.",
+      "enum": [
+        "FRONT_DOOR",
+        "BACK_DOOR",
+        "SIDE_DOOR",
+        "KNOCK_ON_DOOR",
+        "MAIL_ROOM",
+        "OFFICE",
+        "RECEPTION",
+        "IN_MAILBOX",
+        "OTHER"
+      ],
+      "example": "FRONT_DOOR",
+      "type": "string"
+    },
+    "specialInstructions": {
+      "description": "Special pickup instructions for the carrier.",
+      "example": "Leave by the blue mailbox",
+      "type": "string"
+    }
+  },
+  "required": [
+    "pickupAddress",
+    "packages"
+  ],
+  "type": "object"
+}

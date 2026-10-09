@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/addresses-city-state-schema.json",
+  "title": "CityState",
+  "description": "City and state lookup result.",
+  "type": "object",
+  "properties": {
+    "city": {
+      "type": "string",
+      "description": "City name.",
+      "example": "WASHINGTON"
+    },
+    "state": {
+      "type": "string",
+      "description": "Two-letter state abbreviation.",
+      "example": "DC"
+    },
+    "ZIPCode": {
+      "type": "string",
+      "description": "The queried ZIP Code.",
+      "example": "20212"
+    }
+  }
+}

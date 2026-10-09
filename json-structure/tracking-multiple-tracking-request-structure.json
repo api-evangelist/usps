@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/tracking-multiple-tracking-request-structure.json",
+  "name": "MultipleTrackingRequest",
+  "description": "Request body for multiple package tracking.",
+  "properties": {
+    "trackingNumbers": {
+      "description": "List of USPS tracking numbers to look up (max 10).",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "9400111899223397910390",
+        "9400111899223397910407"
+      ],
+      "type": "array"
+    }
+  },
+  "required": [
+    "trackingNumbers"
+  ],
+  "type": "object"
+}

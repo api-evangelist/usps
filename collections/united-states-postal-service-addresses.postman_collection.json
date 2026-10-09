@@ -1,0 +1,907 @@
+{
+  "item": [
+    {
+      "id": "6aa5d8cd-6147-4923-b5b8-64c0a82b2a14",
+      "name": "Addresses",
+      "description": {
+        "content": "Address validation and standardization operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f2cc78c2-997a-436d-b3af-658cb8af1a73",
+          "name": "USPS Addresses Validate Address",
+          "request": {
+            "name": "USPS Addresses Validate Address",
+            "description": {
+              "content": "Validates and standardizes a US address to USPS specifications. Returns the corrected address with ZIP+4, delivery point, and associated metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "addresses",
+                "v3",
+                "address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "streetAddress",
+                  "value": "<string>",
+                  "description": "(Required) Primary street address line."
+                },
+                {
+                  "disabled": false,
+                  "key": "secondaryAddress",
+                  "value": "<string>",
+                  "description": "Secondary address line (apartment, suite, unit, etc.)."
+                },
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": "<string>",
+                  "description": "City name."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Two-letter state abbreviation."
+                },
+                {
+                  "disabled": false,
+                  "key": "ZIPCode",
+                  "value": "<string>",
+                  "description": "5-digit ZIP Code."
+                },
+                {
+                  "disabled": false,
+                  "key": "ZIPPlus4",
+                  "value": "<string>",
+                  "description": "ZIP+4 Code (4-digit extension)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1baf7d68-ec48-4902-9221-b9a2121cb8b5",
+              "name": "Address successfully validated and standardized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "Suite 100"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    },
+                    {
+                      "key": "ZIPPlus4",
+                      "value": "0001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"firm\": \"\",\n  \"streetAddress\": \"2 MASSACHUSETTS AVE NE\",\n  \"streetAddressAbbreviation\": \"\",\n  \"secondaryAddress\": \"\",\n  \"city\": \"WASHINGTON\",\n  \"cityAbbreviation\": \"\",\n  \"state\": \"DC\",\n  \"postalCode\": \"\",\n  \"province\": \"\",\n  \"ZIPCode\": \"20212\",\n  \"ZIPPlus4\": \"0001\",\n  \"urbanization\": \"\",\n  \"classificationCode\": \"D\",\n  \"DPVConfirmation\": \"Y\",\n  \"DPVCMRA\": \"N\",\n  \"DPVFootnotes\": \"AABB\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05cdaadf-e059-40ed-a6b3-d18e20ab1dbf",
+              "name": "Bad request - invalid address parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "Suite 100"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    },
+                    {
+                      "key": "ZIPPlus4",
+                      "value": "0001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a31e22c-e81d-4464-bd6e-2ad485b6961a",
+              "name": "Unauthorized - invalid or missing bearer token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "Suite 100"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    },
+                    {
+                      "key": "ZIPPlus4",
+                      "value": "0001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d708346-80a0-43be-acd4-bfbd65b8240e",
+              "name": "Too many requests - rate limit exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "Suite 100"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    },
+                    {
+                      "key": "ZIPPlus4",
+                      "value": "0001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "123502ee-d445-4a18-876e-a88a3773b537",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "Suite 100"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    },
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    },
+                    {
+                      "key": "ZIPPlus4",
+                      "value": "0001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "264c9946-e496-409f-9bf0-3778deab82cd",
+          "name": "USPS Addresses Get City and State by ZIP",
+          "request": {
+            "name": "USPS Addresses Get City and State by ZIP",
+            "description": {
+              "content": "Returns the city and state associated with a given 5-digit ZIP Code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "addresses",
+                "v3",
+                "city-state"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ZIPCode",
+                  "value": "<string>",
+                  "description": "(Required) 5-digit ZIP Code to look up."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "90cf6686-4925-4261-9072-c23c185231f9",
+              "name": "City and state returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "city-state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"city\": \"WASHINGTON\",\n  \"state\": \"DC\",\n  \"ZIPCode\": \"20212\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76101825-e627-47fb-97d6-0d4c453e5f73",
+              "name": "Bad request - invalid ZIP Code.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "city-state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9619f4cf-52ea-4f44-994b-c77eaaf21e7c",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "city-state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ZIPCode",
+                      "value": "20212"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0b2d55b-3c54-4694-b1b6-2c8907582b40",
+          "name": "USPS Addresses Get ZIP Code",
+          "request": {
+            "name": "USPS Addresses Get ZIP Code",
+            "description": {
+              "content": "Returns the ZIP Code and ZIP+4 associated with an address. Useful for address completion and postage calculation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "addresses",
+                "v3",
+                "zipcode"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "streetAddress",
+                  "value": "<string>",
+                  "description": "(Required) Primary street address line."
+                },
+                {
+                  "disabled": false,
+                  "key": "secondaryAddress",
+                  "value": "<string>",
+                  "description": "Secondary address line."
+                },
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": "<string>",
+                  "description": "(Required) City name."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "(Required) Two-letter state abbreviation."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "488ec63e-2ca5-4d36-ba4e-3da372e44a46",
+              "name": "ZIP Code returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "zipcode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"streetAddress\": \"2 MASSACHUSETTS AVE NE\",\n  \"city\": \"WASHINGTON\",\n  \"state\": \"DC\",\n  \"ZIPCode\": \"20212\",\n  \"ZIPPlus4\": \"0001\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e067a63-68ea-47fb-9948-623beb04619c",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "zipcode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fd05f85-48be-45d8-ae8c-19985a11ac29",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addresses",
+                    "v3",
+                    "zipcode"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "streetAddress",
+                      "value": "2 Massachusetts Ave NE"
+                    },
+                    {
+                      "key": "secondaryAddress",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "city",
+                      "value": "Washington"
+                    },
+                    {
+                      "key": "state",
+                      "value": "DC"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"ADDR_ERR_001\",\n    \"message\": \"Address not found\",\n    \"errors\": [\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      },\n      {\n        \"status\": \"400\",\n        \"title\": \"Invalid ZIP Code\",\n        \"detail\": \"The ZIP Code provided is not valid.\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.usps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b5f2de0b-3f44-498a-b257-ae5967e0d363",
+    "name": "USPS Addresses API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USPS Addresses API validates and corrects address information, eliminating errors, improving package delivery service and package pricing. Supports address standardization, city and state lookup, and ZIP Code validation.\n\nContact Support:\n Name: USPS API Support\n Email: https://emailus.usps.com/s/web-tools-inquiry",
+      "type": "text/plain"
+    }
+  }
+}

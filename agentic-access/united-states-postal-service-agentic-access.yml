@@ -1,0 +1,155 @@
+generated: '2026-09-23'
+method: generated
+source: openapi/united-states-postal-service-addresses-api-openapi.yml, openapi/united-states-postal-service-carrier-pickup-api-openapi.yml,
+  openapi/united-states-postal-service-domestic-prices-api-openapi.yml, openapi/united-states-postal-service-tracking-api-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 12
+  by_action_class:
+    connected: 9
+    acting: 3
+  by_consequence:
+    read: 9
+    write: 3
+  human_in_the_loop_required: 0
+operations:
+- path: /addresses/v3/address
+  method: get
+  operationId: validateAddress
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /addresses/v3/city-state
+  method: get
+  operationId: getCityState
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /addresses/v3/zipcode
+  method: get
+  operationId: getZIPCode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /pickup/v3/carrier-pickup
+  method: post
+  operationId: scheduleCarrierPickup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /pickup/v3/carrier-pickup
+  method: get
+  operationId: getCarrierPickup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /pickup/v3/carrier-pickup
+  method: put
+  operationId: updateCarrierPickup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /pickup/v3/carrier-pickup
+  method: delete
+  operationId: cancelCarrierPickup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /prices/v3/base-rates/search
+  method: post
+  operationId: searchBaseRates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /prices/v3/extra-service-rates/search
+  method: post
+  operationId: searchExtraServiceRates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /prices/v3/total-rates/search
+  method: post
+  operationId: searchTotalRates
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/v3/tracking/{trackingNumber}
+  method: get
+  operationId: getTracking
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tracking/v3/tracking
+  method: post
+  operationId: getMultipleTracking
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

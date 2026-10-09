@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/domestic-prices-total-rate-response-schema.json",
+  "title": "TotalRateResponse",
+  "description": "Total rate response including base and extra service rates.",
+  "type": "object",
+  "properties": {
+    "rates": {
+      "type": "array",
+      "description": "List of total rates.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "totalBasePrice": {
+            "type": "number",
+            "description": "Base postage price in USD.",
+            "example": 8.7
+          },
+          "totalPrice": {
+            "type": "number",
+            "description": "Total price including all fees in USD.",
+            "example": 12.5
+          },
+          "fees": {
+            "type": "array",
+            "description": "Breakdown of additional fees.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Fee name.",
+                  "example": "Signature Confirmation"
+                },
+                "price": {
+                  "type": "number",
+                  "description": "Fee amount in USD.",
+                  "example": 3.8
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

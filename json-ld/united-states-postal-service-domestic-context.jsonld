@@ -1,0 +1,93 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "usps": "https://usps.api.usps.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "BaseRateRequest": "usps:BaseRateRequest",
+    "ExtraServiceRateRequest": "usps:ExtraServiceRateRequest",
+    "ExtraServiceRateResponse": "usps:ExtraServiceRateResponse",
+    "RateResponse": "usps:RateResponse",
+    "TotalRateRequest": "usps:TotalRateRequest",
+    "TotalRateResponse": "usps:TotalRateResponse",
+    "originZIPCode": {
+      "@id": "usps:originZIPCode",
+      "@type": "xsd:string"
+    },
+    "destinationZIPCode": {
+      "@id": "usps:destinationZIPCode",
+      "@type": "xsd:string"
+    },
+    "weight": {
+      "@id": "usps:weight",
+      "@type": "xsd:decimal"
+    },
+    "length": {
+      "@id": "usps:length",
+      "@type": "xsd:decimal"
+    },
+    "width": {
+      "@id": "usps:width",
+      "@type": "xsd:decimal"
+    },
+    "height": {
+      "@id": "usps:height",
+      "@type": "xsd:decimal"
+    },
+    "mailClass": {
+      "@id": "usps:mailClass",
+      "@type": "xsd:string"
+    },
+    "processingCategory": {
+      "@id": "usps:processingCategory",
+      "@type": "xsd:string"
+    },
+    "destinationEntryFacilityType": {
+      "@id": "usps:destinationEntryFacilityType",
+      "@type": "xsd:string"
+    },
+    "rateIndicator": {
+      "@id": "usps:rateIndicator",
+      "@type": "xsd:string"
+    },
+    "extraServiceCode": {
+      "@id": "usps:extraServiceCode",
+      "@type": "xsd:string"
+    },
+    "extraServices": {
+      "@id": "usps:extraServices",
+      "@container": "@set"
+    },
+    "name": "schema:name",
+    "price": {
+      "@id": "usps:price",
+      "@type": "xsd:decimal"
+    },
+    "rates": {
+      "@id": "usps:rates",
+      "@container": "@set"
+    },
+    "skuCode": {
+      "@id": "usps:skuCode",
+      "@type": "xsd:string"
+    },
+    "description": "schema:description",
+    "maxWeight": {
+      "@id": "usps:maxWeight",
+      "@type": "xsd:decimal"
+    },
+    "fees": {
+      "@id": "usps:fees",
+      "@container": "@set"
+    },
+    "totalBasePrice": {
+      "@id": "usps:totalBasePrice",
+      "@type": "xsd:decimal"
+    },
+    "totalPrice": {
+      "@id": "usps:totalPrice",
+      "@type": "xsd:decimal"
+    }
+  }
+}

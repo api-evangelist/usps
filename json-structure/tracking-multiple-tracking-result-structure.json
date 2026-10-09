@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/tracking-multiple-tracking-result-structure.json",
+  "name": "MultipleTrackingResult",
+  "description": "Tracking results for multiple packages.",
+  "properties": {
+    "trackingResults": {
+      "description": "List of tracking results per tracking number.",
+      "items": {
+        "properties": {
+          "trackingNumber": {
+            "description": "The tracking number.",
+            "example": "9400111899223397910390",
+            "type": "string"
+          },
+          "status": {
+            "description": "Current delivery status.",
+            "example": "DELIVERED",
+            "type": "string"
+          },
+          "deliveryDate": {
+            "description": "Actual or estimated delivery date.",
+            "example": "2025-03-14",
+            "type": "date"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}

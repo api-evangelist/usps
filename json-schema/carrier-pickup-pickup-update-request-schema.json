@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/carrier-pickup-pickup-update-request-schema.json",
+  "title": "PickupUpdateRequest",
+  "description": "Request to update an existing carrier pickup.",
+  "type": "object",
+  "properties": {
+    "confirmationNumber": {
+      "type": "string",
+      "description": "Confirmation number of the pickup to update.",
+      "example": "WTC123456789"
+    },
+    "packages": {
+      "type": "array",
+      "description": "Updated package list.",
+      "items": {
+        "$ref": "#/components/schemas/PickupPackage"
+      }
+    },
+    "packageLocation": {
+      "type": "string",
+      "description": "Updated package location.",
+      "example": "BACK_DOOR"
+    },
+    "specialInstructions": {
+      "type": "string",
+      "description": "Updated special instructions."
+    }
+  },
+  "required": [
+    "confirmationNumber"
+  ]
+}

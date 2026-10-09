@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/domestic-prices-total-rate-response-structure.json",
+  "name": "TotalRateResponse",
+  "description": "Total rate response including base and extra service rates.",
+  "properties": {
+    "rates": {
+      "description": "List of total rates.",
+      "items": {
+        "properties": {
+          "totalBasePrice": {
+            "description": "Base postage price in USD.",
+            "example": 8.7,
+            "type": "double"
+          },
+          "totalPrice": {
+            "description": "Total price including all fees in USD.",
+            "example": 12.5,
+            "type": "double"
+          },
+          "fees": {
+            "description": "Breakdown of additional fees.",
+            "items": {
+              "properties": {
+                "name": {
+                  "description": "Fee name.",
+                  "example": "Signature Confirmation",
+                  "type": "string"
+                },
+                "price": {
+                  "description": "Fee amount in USD.",
+                  "example": 3.8,
+                  "type": "double"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}

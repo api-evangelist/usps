@@ -1,0 +1,87 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "usps": "https://usps.api.usps.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "MultipleTrackingRequest": "usps:MultipleTrackingRequest",
+    "MultipleTrackingResult": "usps:MultipleTrackingResult",
+    "TrackingEvent": "usps:TrackingEvent",
+    "TrackingResult": "usps:TrackingResult",
+    "trackingNumbers": {
+      "@id": "usps:trackingNumbers",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "trackingResults": {
+      "@id": "usps:trackingResults",
+      "@container": "@set"
+    },
+    "trackingNumber": {
+      "@id": "usps:trackingNumber",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "usps:status",
+      "@type": "xsd:string"
+    },
+    "deliveryDate": {
+      "@id": "usps:deliveryDate",
+      "@type": "xsd:date"
+    },
+    "EventTime": {
+      "@id": "usps:EventTime",
+      "@type": "xsd:string"
+    },
+    "EventDate": {
+      "@id": "usps:EventDate",
+      "@type": "xsd:string"
+    },
+    "Event": {
+      "@id": "usps:Event",
+      "@type": "xsd:string"
+    },
+    "EventCity": {
+      "@id": "usps:EventCity",
+      "@type": "xsd:string"
+    },
+    "EventState": {
+      "@id": "usps:EventState",
+      "@type": "xsd:string"
+    },
+    "EventZIPCode": {
+      "@id": "usps:EventZIPCode",
+      "@type": "xsd:string"
+    },
+    "EventCountry": {
+      "@id": "usps:EventCountry",
+      "@type": "xsd:string"
+    },
+    "FirmName": {
+      "@id": "usps:FirmName",
+      "@type": "xsd:string"
+    },
+    "Name": {
+      "@id": "usps:Name",
+      "@type": "xsd:string"
+    },
+    "AuthorizedAgent": {
+      "@id": "usps:AuthorizedAgent",
+      "@type": "xsd:string"
+    },
+    "DeliveryAttributeCode": {
+      "@id": "usps:DeliveryAttributeCode",
+      "@type": "xsd:string"
+    },
+    "TrackSummary": {
+      "@id": "usps:TrackSummary",
+      "@type": "xsd:string"
+    },
+    "TrackDetail": {
+      "@id": "usps:TrackDetail",
+      "@container": "@set",
+      "@type": "xsd:string"
+    }
+  }
+}

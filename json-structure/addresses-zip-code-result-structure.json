@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/addresses-zip-code-result-structure.json",
+  "name": "ZIPCodeResult",
+  "description": "ZIP Code lookup result.",
+  "properties": {
+    "streetAddress": {
+      "description": "Standardized street address.",
+      "example": "2 MASSACHUSETTS AVE NE",
+      "type": "string"
+    },
+    "city": {
+      "description": "City name.",
+      "example": "WASHINGTON",
+      "type": "string"
+    },
+    "state": {
+      "description": "Two-letter state abbreviation.",
+      "example": "DC",
+      "type": "string"
+    },
+    "ZIPCode": {
+      "description": "5-digit ZIP Code.",
+      "example": "20212",
+      "type": "string"
+    },
+    "ZIPPlus4": {
+      "description": "ZIP+4 Code.",
+      "example": "0001",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

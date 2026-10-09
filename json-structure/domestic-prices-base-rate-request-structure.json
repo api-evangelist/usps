@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/domestic-prices-base-rate-request-structure.json",
+  "name": "BaseRateRequest",
+  "description": "Request parameters for base rate search.",
+  "properties": {
+    "originZIPCode": {
+      "description": "5-digit origin ZIP Code.",
+      "example": "20212",
+      "type": "string"
+    },
+    "destinationZIPCode": {
+      "description": "5-digit destination ZIP Code.",
+      "example": "90210",
+      "type": "string"
+    },
+    "weight": {
+      "description": "Package weight in pounds.",
+      "example": 1.5,
+      "type": "double"
+    },
+    "length": {
+      "description": "Package length in inches.",
+      "example": 12.0,
+      "type": "double"
+    },
+    "width": {
+      "description": "Package width in inches.",
+      "example": 8.0,
+      "type": "double"
+    },
+    "height": {
+      "description": "Package height in inches.",
+      "example": 4.0,
+      "type": "double"
+    },
+    "mailClass": {
+      "description": "USPS mail class for the shipment.",
+      "enum": [
+        "PRIORITY_MAIL",
+        "PRIORITY_MAIL_EXPRESS",
+        "FIRST_CLASS_PACKAGE_SERVICE",
+        "PARCEL_SELECT",
+        "MEDIA_MAIL",
+        "LIBRARY_MAIL",
+        "BOUND_PRINTED_MATTER"
+      ],
+      "example": "PRIORITY_MAIL",
+      "type": "string"
+    },
+    "processingCategory": {
+      "description": "Processing category for the package.",
+      "enum": [
+        "MACHINABLE",
+        "NON_MACHINABLE",
+        "IRREGULAR",
+        "LETTERS",
+        "FLATS"
+      ],
+      "example": "MACHINABLE",
+      "type": "string"
+    },
+    "destinationEntryFacilityType": {
+      "description": "Type of destination entry facility.",
+      "enum": [
+        "NONE",
+        "DESTINATION_DELIVERY_UNIT",
+        "DESTINATION_SERVICE_FACILITY",
+        "DESTINATION_SECTIONAL_CENTER_FACILITY",
+        "DESTINATION_BULK_MAIL_CENTER"
+      ],
+      "example": "NONE",
+      "type": "string"
+    },
+    "rateIndicator": {
+      "description": "Rate indicator code for special rate categories.",
+      "example": "DR",
+      "type": "string"
+    }
+  },
+  "required": [
+    "originZIPCode",
+    "destinationZIPCode",
+    "weight",
+    "mailClass"
+  ],
+  "type": "object"
+}

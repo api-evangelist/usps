@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USPS Tracking API",
+    "version": "3.2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "USPS Tracking Get Package Tracking Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.usps.com/tracking/v3/tracking/:trackingNumber",
+            "params": [
+              {
+                "name": "trackingNumber",
+                "value": "9400111899223397910390",
+                "type": "path",
+                "description": "The USPS tracking number for the package."
+              },
+              {
+                "name": "expand",
+                "value": "SUMMARY",
+                "type": "query",
+                "description": "Optional expansion for additional detail fields (e.g. SUMMARY)."
+              }
+            ]
+          },
+          "docs": "Returns the tracking status and complete scan event history for a given USPS tracking number. Includes delivery status, estimated delivery date, and location details for each scan event."
+        },
+        {
+          "info": {
+            "name": "USPS Tracking Get Multiple Package Tracking Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.usps.com/tracking/v3/tracking",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns tracking status for multiple USPS packages in a single request. Accepts up to 10 tracking numbers per request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

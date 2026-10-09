@@ -1,0 +1,10 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "pickupAddress": "pickupAddress-value",
+  "packages": [
+    "item-value"
+  ],
+  "packageLocation": "FRONT_DOOR",
+  "specialInstructions": "Leave by the blue mailbox"
+}

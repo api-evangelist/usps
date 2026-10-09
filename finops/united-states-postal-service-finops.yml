@@ -1,0 +1,87 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: United States Postal Service
+providerId: united-states-postal-service
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: generated
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - Government
+  - Postal Service
+  - FinOps
+  - FOCUS
+description: FOCUS-aligned FinOps for USPS Developer APIs. The APIs themselves are not metered as
+  a per-call charge. Real spend lives downstream - postage paid per shipping label via an Enterprise
+  Payment Account. The API surface is the cost-control point for label generation, address validation
+  efficiency, and tracking polling rather than itself a billable line.
+sources:
+  - https://developers.usps.com
+  - https://developers.usps.com/getting-started
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: United States Postal Service
+serviceCategory: Postal / Shipping
+billingModel:
+  pricingCategory: Pay-Per-Label (postage)
+  billingFrequency: Continuous Settlement
+  billingCurrency: USD
+  chargeCategories:
+    - Purchase
+focusColumns:
+  ServiceName: USPS Developer APIs
+  ServiceCategory: Postal / Shipping
+  ProviderName: United States Postal Service
+  PublisherName: United States Postal Service
+  InvoiceIssuerName: United States Postal Service
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+meters:
+  - name: shipping_labels
+    description: Labels generated through the Labels APIs; postage cost is debited from the Enterprise
+      Payment Account per label based on USPS rate cards.
+    unit: label
+    aggregation: sum
+    dimensions:
+      - service_class
+      - origin_zip
+      - destination_zip
+      - weight
+  - name: address_validation_calls
+    description: Calls to the Addresses API for validation; not separately billed but tracked against
+      portal quota.
+    unit: request
+    aggregation: sum
+  - name: tracking_calls
+    description: Calls to the Tracking API; not separately billed but tracked against portal quota.
+    unit: request
+    aggregation: sum
+  - name: pricing_calls
+    description: Calls to Domestic / International Pricing APIs for rate quoting; not separately
+      billed.
+    unit: request
+    aggregation: sum
+principles:
+  - name: Visibility
+    description: USPS does not expose a usage API for cost; track Enterprise Payment Account postage
+      debits and correlate to label-creation events from your own integration logs.
+  - name: Allocation
+    description: Tag every Labels API call with cost-center, customer-order, and origin-warehouse
+      so postage debits can be allocated post-fact via internal reconciliation.
+  - name: Optimization
+    description: Reduce postage spend by selecting the right service class per shipment, cleansing
+      addresses up-front via the Addresses API, and avoiding redundant label re-generation. Reduce
+      portal quota pressure by caching address-validation and pricing responses.
+  - name: Accountability
+    description: Assign Enterprise Payment Account ownership to a finance/operations stakeholder;
+      submit USPS API service requests to right-size quota for the production workload.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

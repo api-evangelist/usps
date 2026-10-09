@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/domestic-prices-extra-service-rate-request-structure.json",
+  "name": "ExtraServiceRateRequest",
+  "description": "Request parameters for extra service rate search.",
+  "properties": {
+    "originZIPCode": {
+      "description": "5-digit origin ZIP Code.",
+      "example": "20212",
+      "type": "string"
+    },
+    "destinationZIPCode": {
+      "description": "5-digit destination ZIP Code.",
+      "example": "90210",
+      "type": "string"
+    },
+    "extraServiceCode": {
+      "description": "Code identifying the extra service.",
+      "example": "955",
+      "type": "string"
+    },
+    "mailClass": {
+      "description": "USPS mail class.",
+      "example": "PRIORITY_MAIL",
+      "type": "string"
+    },
+    "weight": {
+      "description": "Package weight in pounds.",
+      "example": 1.5,
+      "type": "double"
+    }
+  },
+  "required": [
+    "extraServiceCode",
+    "mailClass"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,13 @@
+{
+  "rates": [
+    {
+      "skuCode": "DPXX0XXXXB00020",
+      "description": "Priority Mail",
+      "price": 8.7,
+      "maxWeight": 70,
+      "fees": [
+        {}
+      ]
+    }
+  ]
+}

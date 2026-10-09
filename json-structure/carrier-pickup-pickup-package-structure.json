@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/carrier-pickup-pickup-package-structure.json",
+  "name": "PickupPackage",
+  "description": "Package information for pickup.",
+  "properties": {
+    "serviceType": {
+      "description": "USPS service type for the package.",
+      "enum": [
+        "APO/FPO/DPO",
+        "PRIORITY_MAIL_EXPRESS",
+        "PRIORITY_MAIL",
+        "FIRST_CLASS_PACKAGE_SERVICE",
+        "PARCEL_SELECT",
+        "RETURNS"
+      ],
+      "example": "PRIORITY_MAIL",
+      "type": "string"
+    },
+    "count": {
+      "description": "Number of packages of this service type.",
+      "example": 1,
+      "type": "int32"
+    }
+  },
+  "type": "object"
+}

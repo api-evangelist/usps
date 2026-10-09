@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/domestic-prices-rate-response-structure.json",
+  "name": "RateResponse",
+  "description": "Base rate search response.",
+  "properties": {
+    "rates": {
+      "description": "List of available rates for the requested criteria.",
+      "items": {
+        "properties": {
+          "skuCode": {
+            "description": "USPS SKU code for the rate.",
+            "example": "DPXX0XXXXB00020",
+            "type": "string"
+          },
+          "description": {
+            "description": "Human-readable rate description.",
+            "example": "Priority Mail",
+            "type": "string"
+          },
+          "price": {
+            "description": "Rate price in USD.",
+            "example": 8.7,
+            "type": "double"
+          },
+          "maxWeight": {
+            "description": "Maximum weight in pounds for this rate.",
+            "example": 70,
+            "type": "double"
+          },
+          "fees": {
+            "description": "Additional fees included in this rate.",
+            "items": {
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}

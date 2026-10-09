@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/domestic-prices-extra-service-rate-response-schema.json",
+  "title": "ExtraServiceRateResponse",
+  "description": "Extra service rate response.",
+  "type": "object",
+  "properties": {
+    "extraServices": {
+      "type": "array",
+      "description": "List of extra service rates.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "extraServiceCode": {
+            "type": "string",
+            "description": "Extra service code.",
+            "example": "955"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the extra service.",
+            "example": "Signature Confirmation"
+          },
+          "price": {
+            "type": "number",
+            "description": "Price for the extra service in USD.",
+            "example": 3.8
+          }
+        }
+      }
+    }
+  }
+}

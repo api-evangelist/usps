@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/carrier-pickup-pickup-response-schema.json",
+  "title": "PickupResponse",
+  "description": "Carrier pickup confirmation response.",
+  "type": "object",
+  "properties": {
+    "confirmationNumber": {
+      "type": "string",
+      "description": "Unique confirmation number for the pickup.",
+      "example": "WTC123456789"
+    },
+    "dayOfWeek": {
+      "type": "string",
+      "description": "Day of the week for the scheduled pickup.",
+      "example": "Monday"
+    },
+    "pickupDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the scheduled pickup.",
+      "example": "2025-03-17"
+    },
+    "address": {
+      "$ref": "#/components/schemas/PickupAddress"
+    }
+  }
+}

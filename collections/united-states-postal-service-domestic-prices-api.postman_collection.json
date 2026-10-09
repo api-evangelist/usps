@@ -1,0 +1,680 @@
+{
+  "item": [
+    {
+      "id": "2f561986-26e7-4d42-b4aa-1c58f375aab0",
+      "name": "Domestic Prices",
+      "description": {
+        "content": "Domestic postage pricing and rate calculation operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fe889170-1fb2-4b06-ae97-2a89e2373c19",
+          "name": "USPS Domestic Prices Search Base Rates",
+          "request": {
+            "name": "USPS Domestic Prices Search Base Rates",
+            "description": {
+              "content": "Returns base postage rates for domestic shipments based on origin and destination ZIP Codes, weight, dimensions, and mail class.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "prices",
+                "v3",
+                "base-rates",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"originZIPCode\": \"<string>\",\n  \"destinationZIPCode\": \"<string>\",\n  \"weight\": \"<number>\",\n  \"mailClass\": \"<string>\",\n  \"length\": \"<number>\",\n  \"width\": \"<number>\",\n  \"height\": \"<number>\",\n  \"processingCategory\": \"<string>\",\n  \"destinationEntryFacilityType\": \"<string>\",\n  \"rateIndicator\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cddc83ea-511f-4b1d-aef4-8f4dd89caded",
+              "name": "Base rates returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "base-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"weight\": 1.5,\n  \"length\": 12,\n  \"width\": 8,\n  \"height\": 4,\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"processingCategory\": \"MACHINABLE\",\n  \"destinationEntryFacilityType\": \"NONE\",\n  \"rateIndicator\": \"DR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rates\": [\n    {\n      \"skuCode\": \"DPXX0XXXXB00020\",\n      \"description\": \"Priority Mail\",\n      \"price\": 8.7,\n      \"maxWeight\": 70,\n      \"fees\": []\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffe9df53-b263-454c-bcca-6b0d8cc6fc24",
+              "name": "Bad request - invalid parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "base-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"weight\": 1.5,\n  \"length\": 12,\n  \"width\": 8,\n  \"height\": 4,\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"processingCategory\": \"MACHINABLE\",\n  \"destinationEntryFacilityType\": \"NONE\",\n  \"rateIndicator\": \"DR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PRICE_ERR_001\",\n    \"message\": \"Invalid mail class\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ec8cd83-08f4-4f0a-8a3e-39823504b1f7",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "base-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"weight\": 1.5,\n  \"length\": 12,\n  \"width\": 8,\n  \"height\": 4,\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"processingCategory\": \"MACHINABLE\",\n  \"destinationEntryFacilityType\": \"NONE\",\n  \"rateIndicator\": \"DR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PRICE_ERR_001\",\n    \"message\": \"Invalid mail class\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85876a23-e3d9-4329-933e-20ac5033a356",
+          "name": "USPS Domestic Prices Search Extra Service Rates",
+          "request": {
+            "name": "USPS Domestic Prices Search Extra Service Rates",
+            "description": {
+              "content": "Returns rates for additional USPS services such as insurance, signature confirmation, certified mail, and other extra services.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "prices",
+                "v3",
+                "extra-service-rates",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"extraServiceCode\": \"<string>\",\n  \"mailClass\": \"<string>\",\n  \"originZIPCode\": \"<string>\",\n  \"destinationZIPCode\": \"<string>\",\n  \"weight\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b418dc55-d507-4cba-8b91-a2bc8f306276",
+              "name": "Extra service rates returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "extra-service-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"extraServiceCode\": \"955\",\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"weight\": 1.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"extraServices\": [\n    {\n      \"extraServiceCode\": \"955\",\n      \"name\": \"Signature Confirmation\",\n      \"price\": 3.8\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9622d3cc-fb21-46ac-aae6-3527adce0325",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "extra-service-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"extraServiceCode\": \"955\",\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"weight\": 1.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PRICE_ERR_001\",\n    \"message\": \"Invalid mail class\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b99fc98-9634-4343-8786-84c25e7335a2",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "extra-service-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"extraServiceCode\": \"955\",\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"weight\": 1.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PRICE_ERR_001\",\n    \"message\": \"Invalid mail class\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec2b2cd7-f800-470e-9a64-995467942ce8",
+          "name": "USPS Domestic Prices Search Total Rates",
+          "request": {
+            "name": "USPS Domestic Prices Search Total Rates",
+            "description": {
+              "content": "Returns total postage rates including base rate plus any extra service fees for domestic shipments. Provides a single total price for the complete shipping configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "prices",
+                "v3",
+                "total-rates",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"originZIPCode\": \"<string>\",\n  \"destinationZIPCode\": \"<string>\",\n  \"weight\": \"<number>\",\n  \"mailClass\": \"<string>\",\n  \"length\": \"<number>\",\n  \"width\": \"<number>\",\n  \"height\": \"<number>\",\n  \"extraServices\": [\n    {\n      \"extraServiceCode\": \"<string>\"\n    },\n    {\n      \"extraServiceCode\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3867d59-aecb-4bcc-8398-d0973e2b2516",
+              "name": "Total rates returned successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "total-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"weight\": 1.5,\n  \"length\": 12,\n  \"width\": 8,\n  \"height\": 4,\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"extraServices\": [\n    {\n      \"extraServiceCode\": \"955\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rates\": [\n    {\n      \"totalBasePrice\": 8.7,\n      \"totalPrice\": 12.5,\n      \"fees\": [\n        {\n          \"name\": \"Signature Confirmation\",\n          \"price\": 3.8\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5aacd140-0c87-41d0-a253-05ec57615ff6",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "total-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"weight\": 1.5,\n  \"length\": 12,\n  \"width\": 8,\n  \"height\": 4,\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"extraServices\": [\n    {\n      \"extraServiceCode\": \"955\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PRICE_ERR_001\",\n    \"message\": \"Invalid mail class\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dcb9d108-ea0a-4388-b440-d52fbcc696e5",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "prices",
+                    "v3",
+                    "total-rates",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originZIPCode\": \"20212\",\n  \"destinationZIPCode\": \"90210\",\n  \"weight\": 1.5,\n  \"length\": 12,\n  \"width\": 8,\n  \"height\": 4,\n  \"mailClass\": \"PRIORITY_MAIL\",\n  \"extraServices\": [\n    {\n      \"extraServiceCode\": \"955\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PRICE_ERR_001\",\n    \"message\": \"Invalid mail class\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.usps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a91b80c5-1e7b-44f0-81f5-19b1f28ee49c",
+    "name": "USPS Addresses Domestic Prices API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USPS Addresses API validates and corrects address information, eliminating errors, improving package delivery service and package pricing. Supports address standardization, city and state lookup, and ZIP Code validation.\n\nContact Support:\n Name: USPS API Support\n Email: https://emailus.usps.com/s/web-tools-inquiry",
+      "type": "text/plain"
+    }
+  }
+}

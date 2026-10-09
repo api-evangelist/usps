@@ -1,0 +1,843 @@
+{
+  "item": [
+    {
+      "id": "e92128e4-84de-4f46-a445-c6c425269752",
+      "name": "Carrier Pickup",
+      "description": {
+        "content": "Schedule and manage USPS carrier pickup requests",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f2db0b8-e44c-4eb2-82d8-dcb1a5178a5e",
+          "name": "USPS Carrier Pickup Schedule Carrier Pickup",
+          "request": {
+            "name": "USPS Carrier Pickup Schedule Carrier Pickup",
+            "description": {
+              "content": "Schedules a free USPS carrier pickup at a specified address for the next available pickup date. Pickup is available Monday-Saturday, excluding federal holidays.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pickup",
+                "v3",
+                "carrier-pickup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pickupAddress\": {\n    \"streetAddress\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"ZIPCode\": \"<string>\",\n    \"secondaryAddress\": \"<string>\"\n  },\n  \"packages\": [\n    {\n      \"serviceType\": \"<string>\",\n      \"count\": \"<integer>\"\n    },\n    {\n      \"serviceType\": \"<string>\",\n      \"count\": \"<integer>\"\n    }\n  ],\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"packageLocation\": \"<string>\",\n  \"specialInstructions\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a1b28e69-fcaa-4151-ba45-8c097ae97417",
+              "name": "Pickup scheduled successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"pickupAddress\": {\n    \"streetAddress\": \"2 Massachusetts Ave NE\",\n    \"city\": \"Washington\",\n    \"state\": \"DC\",\n    \"ZIPCode\": \"20212\"\n  },\n  \"packages\": [\n    {\n      \"serviceType\": \"APO/FPO/DPO\",\n      \"count\": 1\n    }\n  ],\n  \"packageLocation\": \"FRONT_DOOR\",\n  \"specialInstructions\": \"Leave by the blue mailbox\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"confirmationNumber\": \"WTC123456789\",\n  \"dayOfWeek\": \"Monday\",\n  \"pickupDate\": \"2025-03-17\",\n  \"address\": {\n    \"streetAddress\": \"2 MASSACHUSETTS AVE NE\",\n    \"city\": \"WASHINGTON\",\n    \"state\": \"DC\",\n    \"ZIPCode\": \"20212\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aeb7dfe-2a6e-44f1-aae1-4d4bde70cdae",
+              "name": "Bad request - invalid pickup parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"pickupAddress\": {\n    \"streetAddress\": \"2 Massachusetts Ave NE\",\n    \"city\": \"Washington\",\n    \"state\": \"DC\",\n    \"ZIPCode\": \"20212\"\n  },\n  \"packages\": [\n    {\n      \"serviceType\": \"APO/FPO/DPO\",\n      \"count\": 1\n    }\n  ],\n  \"packageLocation\": \"FRONT_DOOR\",\n  \"specialInstructions\": \"Leave by the blue mailbox\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c17e577-7906-4a18-b422-a907d0bea520",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"pickupAddress\": {\n    \"streetAddress\": \"2 Massachusetts Ave NE\",\n    \"city\": \"Washington\",\n    \"state\": \"DC\",\n    \"ZIPCode\": \"20212\"\n  },\n  \"packages\": [\n    {\n      \"serviceType\": \"APO/FPO/DPO\",\n      \"count\": 1\n    }\n  ],\n  \"packageLocation\": \"FRONT_DOOR\",\n  \"specialInstructions\": \"Leave by the blue mailbox\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bef433e0-5c29-4aa8-a530-d0507a11017d",
+          "name": "USPS Carrier Pickup Get Carrier Pickup",
+          "request": {
+            "name": "USPS Carrier Pickup Get Carrier Pickup",
+            "description": {
+              "content": "Retrieves an existing carrier pickup request by confirmation number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pickup",
+                "v3",
+                "carrier-pickup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "confirmationNumber",
+                  "value": "<string>",
+                  "description": "(Required) The confirmation number for the pickup request."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "66acc9ae-2500-473f-b006-7609f6d8aabf",
+              "name": "Pickup information retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confirmationNumber",
+                      "value": "WTC123456789"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"confirmationNumber\": \"WTC123456789\",\n  \"dayOfWeek\": \"Monday\",\n  \"pickupDate\": \"2025-03-17\",\n  \"address\": {\n    \"streetAddress\": \"2 MASSACHUSETTS AVE NE\",\n    \"city\": \"WASHINGTON\",\n    \"state\": \"DC\",\n    \"ZIPCode\": \"20212\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "665a6948-e09c-4644-bf31-a75583de7332",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confirmationNumber",
+                      "value": "WTC123456789"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "829a471a-8e11-4d59-8abd-9eadfdf61951",
+              "name": "Pickup confirmation not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confirmationNumber",
+                      "value": "WTC123456789"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "087029b0-b1a9-41d4-8e63-b02c70ad69e4",
+          "name": "USPS Carrier Pickup Update Carrier Pickup",
+          "request": {
+            "name": "USPS Carrier Pickup Update Carrier Pickup",
+            "description": {
+              "content": "Updates an existing carrier pickup request. Can modify package count, location, and special instructions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pickup",
+                "v3",
+                "carrier-pickup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"confirmationNumber\": \"<string>\",\n  \"packages\": [\n    {\n      \"serviceType\": \"<string>\",\n      \"count\": \"<integer>\"\n    },\n    {\n      \"serviceType\": \"<string>\",\n      \"count\": \"<integer>\"\n    }\n  ],\n  \"packageLocation\": \"<string>\",\n  \"specialInstructions\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "73dc5668-7da1-490d-9590-6f11202d7567",
+              "name": "Pickup updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"confirmationNumber\": \"WTC123456789\",\n  \"packages\": [\n    {\n      \"serviceType\": \"APO/FPO/DPO\",\n      \"count\": 2\n    }\n  ],\n  \"packageLocation\": \"BACK_DOOR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"confirmationNumber\": \"WTC123456789\",\n  \"dayOfWeek\": \"Monday\",\n  \"pickupDate\": \"2025-03-17\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e82a105b-470f-45ae-ae4a-d111c4859ee7",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"confirmationNumber\": \"WTC123456789\",\n  \"packages\": [\n    {\n      \"serviceType\": \"APO/FPO/DPO\",\n      \"count\": 2\n    }\n  ],\n  \"packageLocation\": \"BACK_DOOR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "464003e1-b895-423f-90f7-63f0c21975cc",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"confirmationNumber\": \"WTC123456789\",\n  \"packages\": [\n    {\n      \"serviceType\": \"APO/FPO/DPO\",\n      \"count\": 2\n    }\n  ],\n  \"packageLocation\": \"BACK_DOOR\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2ac5f73-3d4c-48f6-a2b1-a22ccc43f94b",
+          "name": "USPS Carrier Pickup Cancel Carrier Pickup",
+          "request": {
+            "name": "USPS Carrier Pickup Cancel Carrier Pickup",
+            "description": {
+              "content": "Cancels a previously scheduled carrier pickup request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pickup",
+                "v3",
+                "carrier-pickup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "confirmationNumber",
+                  "value": "<string>",
+                  "description": "(Required) The confirmation number for the pickup to cancel."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2716bf9-436d-4444-93d6-2cdf10cb6ccf",
+              "name": "Pickup canceled successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confirmationNumber",
+                      "value": "WTC123456789"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4c78ee3b-591d-471b-bd9c-03880258602b",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confirmationNumber",
+                      "value": "WTC123456789"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3218c6cc-d26d-434b-aef2-9cc3fbb9970a",
+              "name": "Pickup confirmation not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v3",
+                    "carrier-pickup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "confirmationNumber",
+                      "value": "WTC123456789"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"3.0\",\n  \"error\": {\n    \"code\": \"PICKUP_ERR_001\",\n    \"message\": \"Invalid pickup address\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://apis.usps.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "da13dab4-fe96-41fd-af49-f5747b953ff4",
+    "name": "USPS Carrier Pickup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The USPS Carrier Pickup API enables free carrier pickup scheduling for next-day service, Monday through Saturday, excluding holidays. Supports creating, retrieving, updating, and canceling pickup requests.\n\nContact Support:\n Name: USPS API Support",
+      "type": "text/plain"
+    }
+  }
+}

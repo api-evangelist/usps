@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/carrier-pickup-pickup-response-structure.json",
+  "name": "PickupResponse",
+  "description": "Carrier pickup confirmation response.",
+  "properties": {
+    "confirmationNumber": {
+      "description": "Unique confirmation number for the pickup.",
+      "example": "WTC123456789",
+      "type": "string"
+    },
+    "dayOfWeek": {
+      "description": "Day of the week for the scheduled pickup.",
+      "example": "Monday",
+      "type": "string"
+    },
+    "pickupDate": {
+      "description": "Date of the scheduled pickup.",
+      "example": "2025-03-17",
+      "type": "date"
+    },
+    "address": {
+      "$ref": "#/components/schemas/PickupAddress"
+    }
+  },
+  "type": "object"
+}

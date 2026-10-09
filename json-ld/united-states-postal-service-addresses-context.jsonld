@@ -1,0 +1,76 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "usps": "https://usps.api.usps.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Address": "usps:Address",
+    "CityState": "usps:CityState",
+    "ZIPCodeResult": "usps:ZIPCodeResult",
+    "firm": {
+      "@id": "usps:firm",
+      "@type": "xsd:string"
+    },
+    "streetAddress": {
+      "@id": "usps:streetAddress",
+      "@type": "xsd:string"
+    },
+    "streetAddressAbbreviation": {
+      "@id": "usps:streetAddressAbbreviation",
+      "@type": "xsd:string"
+    },
+    "secondaryAddress": {
+      "@id": "usps:secondaryAddress",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "usps:city",
+      "@type": "xsd:string"
+    },
+    "cityAbbreviation": {
+      "@id": "usps:cityAbbreviation",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "usps:state",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "usps:postalCode",
+      "@type": "xsd:string"
+    },
+    "province": {
+      "@id": "usps:province",
+      "@type": "xsd:string"
+    },
+    "ZIPCode": {
+      "@id": "usps:ZIPCode",
+      "@type": "xsd:string"
+    },
+    "ZIPPlus4": {
+      "@id": "usps:ZIPPlus4",
+      "@type": "xsd:string"
+    },
+    "urbanization": {
+      "@id": "usps:urbanization",
+      "@type": "xsd:string"
+    },
+    "classificationCode": {
+      "@id": "usps:classificationCode",
+      "@type": "xsd:string"
+    },
+    "DPVConfirmation": {
+      "@id": "usps:DPVConfirmation",
+      "@type": "xsd:string"
+    },
+    "DPVCMRA": {
+      "@id": "usps:DPVCMRA",
+      "@type": "xsd:string"
+    },
+    "DPVFootnotes": {
+      "@id": "usps:DPVFootnotes",
+      "@type": "xsd:string"
+    }
+  }
+}

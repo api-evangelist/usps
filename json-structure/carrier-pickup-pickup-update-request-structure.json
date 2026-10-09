@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/carrier-pickup-pickup-update-request-structure.json",
+  "name": "PickupUpdateRequest",
+  "description": "Request to update an existing carrier pickup.",
+  "properties": {
+    "confirmationNumber": {
+      "description": "Confirmation number of the pickup to update.",
+      "example": "WTC123456789",
+      "type": "string"
+    },
+    "packages": {
+      "description": "Updated package list.",
+      "items": {
+        "$ref": "#/components/schemas/PickupPackage"
+      },
+      "type": "array"
+    },
+    "packageLocation": {
+      "description": "Updated package location.",
+      "example": "BACK_DOOR",
+      "type": "string"
+    },
+    "specialInstructions": {
+      "description": "Updated special instructions.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "confirmationNumber"
+  ],
+  "type": "object"
+}

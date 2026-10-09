@@ -1,0 +1,14 @@
+{
+  "originZIPCode": "20212",
+  "destinationZIPCode": "90210",
+  "weight": 1.5,
+  "length": 12.0,
+  "width": 8.0,
+  "height": 4.0,
+  "mailClass": "PRIORITY_MAIL",
+  "extraServices": [
+    {
+      "extraServiceCode": "955"
+    }
+  ]
+}

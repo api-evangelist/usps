@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USPS Domestic Prices API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domestic Prices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "USPS Domestic Prices Search Base Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.usps.com/prices/v3/base-rates/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns base postage rates for domestic shipments based on origin and destination ZIP Codes, weight, dimensions, and mail class."
+        },
+        {
+          "info": {
+            "name": "USPS Domestic Prices Search Extra Service Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.usps.com/prices/v3/extra-service-rates/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns rates for additional USPS services such as insurance, signature confirmation, certified mail, and other extra services."
+        },
+        {
+          "info": {
+            "name": "USPS Domestic Prices Search Total Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.usps.com/prices/v3/total-rates/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns total postage rates including base rate plus any extra service fees for domestic shipments. Provides a single total price for the complete shipping configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

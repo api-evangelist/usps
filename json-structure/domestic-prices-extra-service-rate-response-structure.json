@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/domestic-prices-extra-service-rate-response-structure.json",
+  "name": "ExtraServiceRateResponse",
+  "description": "Extra service rate response.",
+  "properties": {
+    "extraServices": {
+      "description": "List of extra service rates.",
+      "items": {
+        "properties": {
+          "extraServiceCode": {
+            "description": "Extra service code.",
+            "example": "955",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the extra service.",
+            "example": "Signature Confirmation",
+            "type": "string"
+          },
+          "price": {
+            "description": "Price for the extra service in USD.",
+            "example": 3.8,
+            "type": "double"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/tracking-tracking-result-schema.json",
+  "title": "TrackingResult",
+  "description": "Tracking result for a single package.",
+  "type": "object",
+  "properties": {
+    "TrackSummary": {
+      "$ref": "#/components/schemas/TrackingEvent",
+      "description": "Most recent tracking event summary."
+    },
+    "TrackDetail": {
+      "type": "array",
+      "description": "Full list of historical tracking events.",
+      "items": {
+        "$ref": "#/components/schemas/TrackingEvent"
+      }
+    }
+  }
+}

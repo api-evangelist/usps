@@ -1,0 +1,14 @@
+{
+  "rates": [
+    {
+      "totalBasePrice": 8.7,
+      "totalPrice": 12.5,
+      "fees": [
+        {
+          "name": {},
+          "price": {}
+        }
+      ]
+    }
+  ]
+}

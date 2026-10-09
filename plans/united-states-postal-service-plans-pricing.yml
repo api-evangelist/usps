@@ -1,0 +1,103 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: United States Postal Service
+providerId: united-states-postal-service
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: generated
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - Government
+  - Postal Service
+  - Shipping
+  - Address Validation
+  - Tracking
+description: USPS Developer APIs are accessed via the developers.usps.com portal under OAuth2 client
+  credentials. The portal does not publish a per-call price list; access to the default product
+  (OAuth, Addresses, Domestic Pricing, International Pricing, Locations, Service Standards, Service
+  Standards Files, Shipping Options, UserInfo, Tracking) is provided to registered developers, and
+  quota increases or non-default APIs (e.g. Labels) require submitting a USPS API service request.
+  Labels APIs additionally require enrollment in USPS Ship and an Enterprise Payment Account.
+sources:
+  - https://developers.usps.com
+  - https://developers.usps.com/getting-started
+plans:
+  - id: united-states-postal-service-default-product
+    name: Default Product (Self-Service Developer)
+    type: freemium
+    description: Default access bundle for registered developers via the USPS Developer Portal. Quotas
+      and rate limits are not published as numeric figures; pricing is not metered at the API layer.
+    entries:
+      - label: Default APIs
+        name: default_apis
+        type: flat
+        metric: varies
+        limit: see USPS API service request for quota increases
+        timeFrame: usage
+        geo: US
+        unit: 1
+        price: see https://developers.usps.com
+        userMultiplied: false
+    elements:
+      - name: OAuth 2.0 Client Credentials
+      - name: Addresses API
+      - name: Domestic Pricing API
+      - name: International Pricing API
+      - name: Locations API
+      - name: Service Standards API
+      - name: Service Standards Files API
+      - name: Shipping Options API
+      - name: UserInfo API
+      - name: Tracking API
+      - name: Sandbox and Live Environments
+  - id: united-states-postal-service-labels
+    name: Labels APIs (Approval Required)
+    type: enterprise
+    description: Labels APIs require additional approval, enrollment in USPS Ship for both outbound
+      and return labels, and an active Enterprise Payment Account. Postage cost is paid per label
+      via the Enterprise Payment Account, not via the API.
+    entries:
+      - label: Labels access
+        name: labels_access
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: US
+        unit: 1
+        price: see https://developers.usps.com (postage paid via Enterprise Payment Account)
+        userMultiplied: false
+    elements:
+      - name: USPS Ship Enrollment
+      - name: Enterprise Payment Account
+      - name: Outbound and Return Labels
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units:
+  - negotiated
+  plans:
+  - name: Default Product (Self-Service Developer)
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - per-use
+  - name: Labels APIs (Approval Required)
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - per-use

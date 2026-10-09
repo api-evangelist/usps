@@ -1,0 +1,8 @@
+{
+  "confirmationNumber": "WTC123456789",
+  "packages": [
+    "item-value"
+  ],
+  "packageLocation": "BACK_DOOR",
+  "specialInstructions": "specialInstructions-value"
+}

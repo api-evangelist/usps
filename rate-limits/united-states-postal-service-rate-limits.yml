@@ -1,0 +1,44 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: United States Postal Service
+providerId: united-states-postal-service
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: generated
+modified: '2026-05-05'
+reconciled: true
+tags:
+  - Government
+  - Postal Service
+  - Rate Limiting
+description: USPS publishes that quotas exist on the modernized developers.usps.com platform, but
+  it does not publish per-second or per-day numeric limits. Quota increases and access to non-default
+  APIs are gated behind a USPS API service request. Authentication is OAuth 2.0 Client Credentials.
+sources:
+  - https://developers.usps.com
+  - https://developers.usps.com/getting-started
+notes: USPS does not publish numeric rate-limit values. The Getting Started doc states quota increases
+  must be requested via a USPS API service request.
+limits:
+  - name: Default product quota
+    scope: api-key
+    metric: varies
+    limit: 'see https://developers.usps.com (request quota increase via USPS API service request)'
+  - name: Labels APIs
+    scope: api-key
+    metric: varies
+    limit: 'enrollment in USPS Ship and Enterprise Payment Account required'
+policies:
+  - name: OAuth 2.0 Client Credentials
+    description: Access uses OAuth 2.0 client credentials issued through the USPS Developer Portal.
+  - name: Quota Increase Process
+    description: To raise default quotas or access non-default APIs, submit a USPS API service request
+      through the developer portal.
+  - name: Labels Approval
+    description: Labels APIs require additional approval, USPS Ship enrollment, and an Enterprise
+      Payment Account before activation.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

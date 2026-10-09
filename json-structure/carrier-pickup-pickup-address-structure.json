@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-structure/carrier-pickup-pickup-address-structure.json",
+  "name": "PickupAddress",
+  "description": "Address for carrier pickup.",
+  "properties": {
+    "streetAddress": {
+      "description": "Primary street address.",
+      "example": "2 Massachusetts Ave NE",
+      "type": "string"
+    },
+    "secondaryAddress": {
+      "description": "Apartment, suite, or unit number.",
+      "example": "Suite 100",
+      "type": "string"
+    },
+    "city": {
+      "description": "City name.",
+      "example": "Washington",
+      "type": "string"
+    },
+    "state": {
+      "description": "Two-letter state abbreviation.",
+      "example": "DC",
+      "type": "string"
+    },
+    "ZIPCode": {
+      "description": "5-digit ZIP Code.",
+      "example": "20212",
+      "type": "string"
+    }
+  },
+  "required": [
+    "streetAddress",
+    "city",
+    "state",
+    "ZIPCode"
+  ],
+  "type": "object"
+}

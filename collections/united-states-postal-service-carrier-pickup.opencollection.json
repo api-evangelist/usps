@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "USPS Carrier Pickup API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Carrier Pickup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "USPS Carrier Pickup Get Carrier Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://apis.usps.com/pickup/v3/carrier-pickup",
+            "params": [
+              {
+                "name": "confirmationNumber",
+                "value": "WTC123456789",
+                "type": "query",
+                "description": "The confirmation number for the pickup request."
+              }
+            ]
+          },
+          "docs": "Retrieves an existing carrier pickup request by confirmation number."
+        },
+        {
+          "info": {
+            "name": "USPS Carrier Pickup Schedule Carrier Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://apis.usps.com/pickup/v3/carrier-pickup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedules a free USPS carrier pickup at a specified address for the next available pickup date. Pickup is available Monday-Saturday, excluding federal holidays."
+        },
+        {
+          "info": {
+            "name": "USPS Carrier Pickup Update Carrier Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://apis.usps.com/pickup/v3/carrier-pickup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing carrier pickup request. Can modify package count, location, and special instructions."
+        },
+        {
+          "info": {
+            "name": "USPS Carrier Pickup Cancel Carrier Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://apis.usps.com/pickup/v3/carrier-pickup",
+            "params": [
+              {
+                "name": "confirmationNumber",
+                "value": "WTC123456789",
+                "type": "query",
+                "description": "The confirmation number for the pickup to cancel."
+              }
+            ]
+          },
+          "docs": "Cancels a previously scheduled carrier pickup request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

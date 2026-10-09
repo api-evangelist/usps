@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/united-states-postal-service/refs/heads/main/json-schema/domestic-prices-total-rate-request-schema.json",
+  "title": "TotalRateRequest",
+  "description": "Request parameters for total rate search.",
+  "type": "object",
+  "properties": {
+    "originZIPCode": {
+      "type": "string",
+      "description": "5-digit origin ZIP Code.",
+      "example": "20212"
+    },
+    "destinationZIPCode": {
+      "type": "string",
+      "description": "5-digit destination ZIP Code.",
+      "example": "90210"
+    },
+    "weight": {
+      "type": "number",
+      "description": "Package weight in pounds.",
+      "example": 1.5
+    },
+    "length": {
+      "type": "number",
+      "description": "Package length in inches.",
+      "example": 12.0
+    },
+    "width": {
+      "type": "number",
+      "description": "Package width in inches.",
+      "example": 8.0
+    },
+    "height": {
+      "type": "number",
+      "description": "Package height in inches.",
+      "example": 4.0
+    },
+    "mailClass": {
+      "type": "string",
+      "description": "USPS mail class.",
+      "example": "PRIORITY_MAIL"
+    },
+    "extraServices": {
+      "type": "array",
+      "description": "List of extra services to include in total rate.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "extraServiceCode": {
+            "type": "string",
+            "description": "Extra service code.",
+            "example": "955"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "originZIPCode",
+    "destinationZIPCode",
+    "weight",
+    "mailClass"
+  ]
+}
