@@ -243,30 +243,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ZIPCodeResult:
-      type: object
-      description: ZIP Code lookup result.
-      properties:
-        streetAddress:
-          type: string
-          description: Standardized street address.
-          example: 2 MASSACHUSETTS AVE NE
-        city:
-          type: string
-          description: City name.
-          example: WASHINGTON
-        state:
-          type: string
-          description: Two-letter state abbreviation.
-          example: DC
-        ZIPCode:
-          type: string
-          description: 5-digit ZIP Code.
-          example: '20212'
-        ZIPPlus4:
-          type: string
-          description: ZIP+4 Code.
-          example: '0001'
     Address:
       type: object
       description: USPS standardized address response.
@@ -389,6 +365,30 @@ components:
           type: string
           description: The queried ZIP Code.
           example: '20212'
+    ZIPCodeResult:
+      type: object
+      description: ZIP Code lookup result.
+      properties:
+        streetAddress:
+          type: string
+          description: Standardized street address.
+          example: 2 MASSACHUSETTS AVE NE
+        city:
+          type: string
+          description: City name.
+          example: WASHINGTON
+        state:
+          type: string
+          description: Two-letter state abbreviation.
+          example: DC
+        ZIPCode:
+          type: string
+          description: 5-digit ZIP Code.
+          example: '20212'
+        ZIPPlus4:
+          type: string
+          description: ZIP+4 Code.
+          example: '0001'
   securitySchemes:
     bearerAuth:
       type: http
